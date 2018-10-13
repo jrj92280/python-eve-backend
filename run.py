@@ -13,6 +13,9 @@ import os
 from eve import Eve
 
 # Heroku support: bind to PORT if defined, otherwise default to 5000.
+from chess_game.board import make_board
+from chess_game.chess_game import ChessGame
+
 if 'PORT' in os.environ:
     port = int(os.environ.get('PORT'))
     # use '0.0.0.0' to ensure your REST API is reachable from all your
@@ -27,6 +30,14 @@ app = Eve()
 @app.route('/hello')
 def hello():
     return "Hello Jason!"
+
+@app.route('/chess')
+def chess():
+    game_board = make_board()
+    board = "<br />".join(" ".join(row) for row in game_board)
+    return board
+
+
 
 if __name__ == '__main__':
     app.run(host=host, port=port)
