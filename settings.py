@@ -1,29 +1,8 @@
-# -*- coding: utf-8 -*-
-
-"""
-    eve-demo settings
-    ~~~~~~~~~~~~~~~~~
-
-    Settings file for our little demo.
-
-    PLEASE NOTE: We don't need to create the two collections in MongoDB.
-    Actually, we don't even need to create the database: GET requests on an
-    empty/non-existant DB will be served correctly ('200' OK with an empty
-    collection); DELETE/PATCH will receive appropriate responses ('404' Not
-    Found), and POST requests will create database and collections when needed.
-    Keep in mind however that such an auto-managed database will most likely
-    perform poorly since it lacks any sort of optimized index.
-
-    :copyright: (c) 2016 by Nicola Iarocci.
-    :license: BSD, see LICENSE for more details.
-"""
-
 import os
 
 # We want to seamlessy run our API both locally and on Heroku. If running on
 # Heroku, sensible DB connection settings are stored in environment variables.
-MONGO_URI = os.environ.get('MONGODB_URI', 'mongodb://localhost:27017/python-eve-demo')
-
+MONGO_URI = os.environ.get('MONGODB_URI', 'mongodb://localhost:27017/python-eve-backend')
 
 # Enable reads (GET), inserts (POST) and DELETE for resources/collections
 # (if you omit this line, the API will default to ['GET'] and provide
@@ -38,6 +17,15 @@ ITEM_METHODS = ['GET', 'PATCH', 'DELETE']
 # API. We can always override these global settings later.
 CACHE_CONTROL = 'max-age=20'
 CACHE_EXPIRES = 20
+
+dogs = {
+    'item_title': 'dog',
+    'schema': {
+        'name': {
+            'type': 'string',
+        }
+    }
+}
 
 # Our API will expose two resources (MongoDB collections): 'people' and
 # 'works'. In order to allow for proper data validation, we define beaviour
@@ -54,6 +42,9 @@ people = {
         'url': 'regex("[\w]+")',
         'field': 'lastname'
     },
+    # person = { id : 1, lastname: 'Jason' }
+    # /people/1 => person
+    # /people/Jason => person
 
     # Schema definition, based on Cerberus grammar. Check the Cerberus project
     # (https://github.com/pyeve/cerberus) for details.
@@ -94,7 +85,7 @@ people = {
 works = {
     # if 'item_title' is not provided Eve will just strip the final
     # 's' from resource name, and use it as the item_title.
-    #'item_title': 'work',
+    # 'item_title': 'work',
 
     # We choose to override global cache-control directives for this resource.
     'cache_control': 'max-age=10,must-revalidate',
@@ -129,4 +120,5 @@ works = {
 DOMAIN = {
     'people': people,
     'works': works,
+    'dogs': dogs
 }
