@@ -10,6 +10,8 @@
 """
 
 import os
+
+from flask import render_template
 from eve import Eve
 
 # Heroku support: bind to PORT if defined, otherwise default to 5000.
@@ -25,18 +27,23 @@ else:
     port = 5000
     host = '127.0.0.1'
 
-app = Eve()
+tmpl_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'templates')
+static_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static')
+
+app = Eve(template_folder=tmpl_dir,
+          static_folder=static_dir)
+
 
 @app.route('/hello')
 def hello():
     return "Hello Jason!"
 
+
 @app.route('/chess')
 def chess():
     game_board = make_board()
     board = "<br />".join(" ".join(row) for row in game_board)
-    return board
-
+    return render_template('chess.html', board=board)
 
 
 if __name__ == '__main__':
