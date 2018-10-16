@@ -16,6 +16,19 @@
 <body>
 
 <h1>Hello Chess World</h1>
+<p class='chess-board'>{{board | safe}}</p>
+<table class="table table-bordered">
+    {% for row in game_board %}
+    {% set row_index = loop.index %}
+    <tr>
+        {% for position in row %}
+        <td onclick="alert('Clicked cell {{ row_index }} {{ loop.index}} with piece  {{ position }}')">
+            {{ position }}
+        </td>
+        {% endfor %}
+    </tr>
+    {% endfor %}
+</table>
 
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>

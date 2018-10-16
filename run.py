@@ -30,9 +30,10 @@ else:
 tmpl_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'templates')
 static_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static')
 
+os.environ['FLASK_ENV']='development'
+
 app = Eve(template_folder=tmpl_dir,
           static_folder=static_dir)
-
 
 @app.route('/hello')
 def hello():
@@ -43,7 +44,7 @@ def hello():
 def chess():
     game_board = make_board()
     board = "<br />".join(" ".join(row) for row in game_board)
-    return render_template('chess.html', board=board)
+    return render_template('chess.html', board=board, game_board=game_board)
 
 
 if __name__ == '__main__':
