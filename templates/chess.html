@@ -1,23 +1,39 @@
 <!doctype html>
 <html lang="en">
-
 <head>
-    <title>Chess</title>
+    <title>Jacobs Chess</title>
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" />
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}"/>
 
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-    <!-- Custom CSS -->
+
+    <!-- Custom styles for this template -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
-
 <body>
 
+<div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
+    <h5 class="my-0 mr-md-auto font-weight-normal">Jacobs Chess</h5>
+    <!--
+    <nav class="my-2 my-md-0 mr-md-3">
+        <a class="p-2 text-dark" href="#">Features</a>
+        <a class="p-2 text-dark" href="#">Enterprise</a>
+        <a class="p-2 text-dark" href="#">Support</a>
+        <a class="p-2 text-dark" href="#">Pricing</a>
+    </nav>
+    -->
+    <a class="btn btn-outline-primary" href="#">Sign up</a>
+</div>
+
+<div class="container">
     <h1>Hello Chess World</h1>
-    <p class='chess-board'>{{board | safe}}</p>
+    <div class="form-group w-50">
+        <label for="usr">Name:</label>
+        <input type="text" class="form-control" id="usr">
+    </div>
     <table class="table table-bordered">
         {% for row in game_board %}
         {% set row_index = loop.index %}
@@ -30,11 +46,20 @@
         </tr>
         {% endfor %}
     </table>
+</div>
+<!--
+    <footer class="pt-4 my-md-5 pt-md-5 border-top">
+        <div class="row">
+            <div class="col-12 col-md">
+                <small class="d-block mb-3 text-muted">&copy; 2017-2018</small>
+            </div>
+        </div>
+    </footer>
+-->
 
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 
 </body>
-
 </html>
