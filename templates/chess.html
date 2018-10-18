@@ -39,8 +39,11 @@
         {% set row_index = loop.index %}
         <tr>
             {% for column in row %}
-            <td onclick="alert('Clicked cell {{ row_index }} {{ loop.index}} with piece  {{ column }}')">
-                {{ column }}
+            <td style="height:65px;width:65px"
+                onclick="alert('Clicked cell {{ row_index }} {{ loop.index}} with piece  {{ column }}')">
+                {% if not column == "##" %}
+                <img src="{{ url_for('static', filename='images/standard/' + column + '.png') }}">
+                {% endif %}
             </td>
             {% endfor %}
         </tr>
