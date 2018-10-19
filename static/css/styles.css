@@ -12,10 +12,6 @@ html {
   max-width: 960px;
 }
 
-.chess-board {
-    font-family: Courier, monospace;
-}
-
 .border-top {
   border-top: 1px solid #e5e5e5;
 }
