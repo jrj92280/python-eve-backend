@@ -33,9 +33,17 @@
 <div class="container">
     <h1>Hello Chess World</h1>
     <div class="form-group w-50">
-        <label for="usr">Name:</label>
-        <input type="text" class="form-control" id="usr">
+        <form action="/chess">
+            <label for="user">Name:</label>
+            <input type="text" class="form-control" id="user" name="user">
+            <input type="submit" class="btn btn-primary"/>
+        </form>
     </div>
+    {% if player_one %}
+    <div>
+        <h2>Player One: {{player_one}}</h2>
+    </div>
+    {% endif %}
     <table class="table table-bordered border-dark chess-board">
         {% for row in game_board %}
         {% set row_index = loop.index %}

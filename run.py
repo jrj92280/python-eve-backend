@@ -1,22 +1,10 @@
-"""   Eve Demo
-    ~~~~~~~~
-    A demostration of a simple API powered by Eve REST API.
-    The live demo is available at eve-demo.herokuapp.com. Please keep in mind
-    that the it is running on Heroku's free tier using a free MongoHQ
-    sandbox, which means that the first request to the service will probably
-    be slow. The database gets a reset every now and then.
-    :copyright: (c) 2016 by Nicola Iarocci.
-    :license: BSD, see LICENSE for more details.
-"""
-
 import os
 
-from flask import render_template
 from eve import Eve
+from flask import render_template, request
 
 # Heroku support: bind to PORT if defined, otherwise default to 5000.
 from chess_game.board import make_board
-from chess_game.chess_game import ChessGame
 
 if 'PORT' in os.environ:
     port = int(os.environ.get('PORT'))
@@ -43,8 +31,10 @@ def hello():
 @app.route('/chess')
 def chess():
     game_board = make_board()
+    player_one = request.args.get("user") or request.form.get('user')
+
     board = "<br />".join(" ".join(row) for row in game_board)
-    return render_template('chess.html', board=board, game_board=game_board)
+    return render_template('chess.html', board=board, game_board=game_board, player_one=player_one)
 
 
 if __name__ == '__main__':
