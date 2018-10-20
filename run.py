@@ -30,7 +30,7 @@ def hello():
 
 @app.route('/chess')
 def chess():
-    game_board = make_board()
+    game_board = request.args.get("game_board") or request.form.get('game_board') or make_board()
     player_one = request.args.get("user") or request.form.get('user')
 
     board = "<br />".join(" ".join(row) for row in game_board)

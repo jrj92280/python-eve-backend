@@ -49,14 +49,17 @@
         {% set row_index = loop.index %}
         {% set row_is_odd = loop.index % 2 %}
         <tr>
-            {% for column in row %}
-            {% set cell_is_odd = loop.index % 2 %}
-            {% set cell_color = '#613613' if (row_is_odd and cell_is_odd) or (not row_is_odd and not cell_is_odd) else
+            {% for cell in row %}
+            {% set column_index = loop.index %}
+            {% set column_is_odd = column_index % 2 %}
+            {% set column_color = '#613613' if (row_is_odd and column_is_odd) or (not row_is_odd and not column_is_odd)
+            else
             '#f6ddc7' %}
-            <td class="chess-board-cell" style="background-color: {{cell_color}}"
-                onclick="alert('Clicked cell {{ row_index }} {{ loop.index}} with piece  {{ column }}')">
-                {% if not column == "##" %}
-                <img src="{{ url_for('static', filename='images/standard/' + column + '.png') }}">
+            <td class="chess-board-cell" style="background-color: {{column_color}}"
+                id="board-cell-{{row_index}}-{{column_index}}"
+                onclick="onCellClick({{row_index}}, {{column_index}}, '{{cell}}')">
+                {% if not cell == "##" %}
+                <img src="{{ url_for('static', filename='images/standard/' + cell + '.png') }}">
                 {% endif %}
             </td>
             {% endfor %}
@@ -78,5 +81,40 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 
+<script>
+    var selectedCell = ''
+
+    $(document).ready(function () {
+        // $("#preview-button").click(previewClick);
+        // $("#cancel-button").click(cancelClick);
+    });
+
+    function onCellClick(row, column, cell) {
+        if (cell === '##') {
+            return;
+        }
+
+        console.log(row, column, cell)
+
+        var allCells = ".chess-board-cell"
+        $(allCells).css({"border-color": "black", "border-width": "2px", "border-style": "solid"});
+
+
+        var cellId = "#board-cell-" + row + "-" + column
+
+        $(cellId).css({"border-color": "yellow", "border-width": "2px", "border-style": "solid"});
+
+        /*
+        var content = $("#content").val();
+        var uid = localStorage.getItem("uid");
+        $.post("/preview-layout", {content: content, uid: uid}, function (response) {
+            var url = '/view-preview-layout?uid=' + uid + "&preview_layout_id=" + response.data;
+            $('#preview').attr('src', url)
+            $('#preview-pane').show()
+        });
+        */
+    }
+
+</script>
 </body>
 </html>
