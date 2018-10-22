@@ -1,6 +1,7 @@
-.chess-board {
+.chess-board-table {
     width: auto;
     font-family: Courier, monospace;
+    border-collapse: separate;
 }
 
 .chess-board-cell {
@@ -9,8 +10,6 @@
     margin: 0;
     padding: 0;
 }
-
-
 
 table.table-bordered > tbody > tr > td {
     border: 2px solid black;
