@@ -90,6 +90,8 @@
     });
 
     function onCellClick(row, column, cell) {
+        console.log(row, column, cell)
+
         // clear lingering formats
         var allCells = ".chess-board-cell"
         $(allCells).css({"border-color": "black", "border-width": "2px", "border-style": "solid"});
@@ -105,12 +107,17 @@
         if (isMove) {
             var existingCell = "#board-cell-" + selectedCell[0] + "-" + selectedCell[1]
             $(existingCell).html('')
-            $(existingCell).click('')
+            document.getElementById("board-cell-" + selectedCell[0] + "-" + selectedCell[1]).onclick = function () {
+            }
 
             var targetCell = "#board-cell-" + row + "-" + column
             $(targetCell).html('<img src="./static/images/standard/' + selectedCell[2] + '.png" />')
+
+            document.getElementById("board-cell-" + row + "-" + column).onclick = function () {
+            }
+            var piece = selectedCell[2]
             $(targetCell).click(function () {
-                onCellClick(row, column, selectedCell[2])
+                onCellClick(row, column, piece)
             })
 
             hintCells = []
@@ -118,10 +125,10 @@
             return;
         }
 
+        hintCells = []
+
         if (cell === 'WP') {
             selectedCell = [row, column, cell]
-            hintCells = []
-
             hintCells.push([row + 1, column])
 
             if (row === 2) {
@@ -129,16 +136,40 @@
             }
         }
 
+        if (cell === 'WH') {
+            selectedCell = [row, column, cell]
+
+            hintCells.push([row + 2, column + 1])
+            hintCells.push([row + 2, column - 1])
+            hintCells.push([row - 2, column + 1])
+            hintCells.push([row - 2, column - 1])
+            hintCells.push([row + 1, column + 2])
+            hintCells.push([row - 1, column + 2])
+            hintCells.push([row + 1, column - 2])
+            hintCells.push([row - 1, column - 2])
+        }
+
         if (cell === '##') {
             return;
         }
 
-        console.log(row, column, cell)
-
+        hintCells = hintCells.filter(
+            function (hint) {
+                var hintCellId = "#board-cell-" + hint[0] + "-" + hint[1]
+                var hintCell = $(hintCellId)
+                var color = selectedCell[2][0]
+                if (hintCell.html() && hintCell.html().indexOf('/' + color) !== -1) {
+                    return false
+                }
+                return true
+            }
+        )
 
         for (var hint of hintCells) {
             var hintCellId = "#board-cell-" + hint[0] + "-" + hint[1]
-            $(hintCellId).css({"border-color": "cornflowerblue", "border-width": "2px", "border-style": "solid"});
+            var hintCell = $(hintCellId)
+
+            hintCell.css({"border-color": "cornflowerblue", "border-width": "2px", "border-style": "solid"});
         }
 
         var cellId = "#board-cell-" + row + "-" + column
