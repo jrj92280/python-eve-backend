@@ -39,30 +39,30 @@
         </form>
     </div>
     {% if player_one %}
-    <div>
-        <h2>Player One: {{player_one}}</h2>
-    </div>
+        <div>
+            <h2>Player One: {{ player_one }}</h2>
+        </div>
     {% endif %}
     <table class="table table-bordered border-dark chess-board-table">
         {% for row in game_board %}
-        {% set row_index = loop.index %}
-        {% set row_is_odd = loop.index % 2 %}
-        <tr>
-            {% for cell in row %}
-            {% set column_index = loop.index %}
-            {% set column_is_odd = column_index % 2 %}
-            {% set column_color = '#613613' if (row_is_odd and column_is_odd) or (not row_is_odd and not column_is_odd)
+            {% set row_index = loop.index %}
+            {% set row_is_odd = loop.index % 2 %}
+            <tr>
+                {% for cell in row %}
+                    {% set column_index = loop.index %}
+                    {% set column_is_odd = column_index % 2 %}
+                    {% set column_color = '#613613' if (row_is_odd and column_is_odd) or (not row_is_odd and not column_is_odd)
             else
             '#f6ddc7' %}
-            <td class="chess-board-cell" style="background-color: {{column_color}}"
-                id="board-cell-{{row_index}}-{{column_index}}"
-                onclick="onCellClick({{row_index}}, {{column_index}}, '{{cell}}')">
-                {% if not cell == "##" %}
-                <img src="{{ url_for('static', filename='images/standard/' + cell + '.png') }}">
-                {% endif %}
-            </td>
-            {% endfor %}
-        </tr>
+                    <td class="chess-board-cell" style="background-color: {{ column_color }}"
+                        id="board-cell-{{ row_index }}-{{ column_index }}"
+                        onclick="onCellClick({{ row_index }}, {{ column_index }}, '{{ cell }}')">
+                        {% if not cell == "##" %}
+                            <img src="{{ url_for('static', filename='images/standard/' + cell + '.png') }}">
+                        {% endif %}
+                    </td>
+                {% endfor %}
+            </tr>
         {% endfor %}
     </table>
 </div>
@@ -129,6 +129,7 @@
 
         if (cell === 'WP') {
             selectedCell = [row, column, cell]
+
             hintCells.push([row + 1, column])
 
             if (row === 2) {
@@ -147,6 +148,58 @@
             hintCells.push([row - 1, column + 2])
             hintCells.push([row + 1, column - 2])
             hintCells.push([row - 1, column - 2])
+        }
+
+        if (cell === 'WB') {
+            selectedCell = [row, column, cell]
+
+            for (var i = 1; i < 8; i++) {
+                hintCells.push([row + i, column + i])
+                hintCells.push([row + i, column - i])
+                hintCells.push([row - i, column + i])
+                hintCells.push([row - i, column - i])
+            }
+        }
+
+        if (cell === 'WR') {
+            selectedCell = [row, column, cell]
+
+            for (var i = 1; i < 8; i++) {
+                hintCells.push([row, column + i])
+                hintCells.push([row, column - i])
+                hintCells.push([row + i, column])
+                hintCells.push([row - i, column])
+            }
+        }
+
+        if (cell === 'WQ') {
+            selectedCell = [row, column, cell]
+
+            for (var i = 1; i < 8; i++) {
+                hintCells.push([row + i, column + i])
+                hintCells.push([row + i, column - i])
+                hintCells.push([row - i, column + i])
+                hintCells.push([row - i, column - i])
+                hintCells.push([row, column + i])
+                hintCells.push([row, column - i])
+                hintCells.push([row + i, column])
+                hintCells.push([row - i, column])
+            }
+        }
+
+
+        if (cell === 'WK') {
+            selectedCell = [row, column, cell]
+
+            hintCells.push([row + 1, column + 1])
+            hintCells.push([row + 1, column - 1])
+            hintCells.push([row - 1, column + 1])
+            hintCells.push([row - 1, column - 1])
+            hintCells.push([row, column + 1])
+            hintCells.push([row, column - 1])
+            hintCells.push([row + 1, column])
+            hintCells.push([row - 1, column])
+
         }
 
         if (cell === '##') {
