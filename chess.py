@@ -1,6 +1,5 @@
-from chess_game.board import make_board
+from chess_game._board import make_board
 from chess_game.chess_game import ChessGame
-from chess_game.pieces.pawn import Pawn
 from chess_game.play_game import get_user_input, game_event_loop
 
 if __name__ == "__main__":

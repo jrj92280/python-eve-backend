@@ -4,7 +4,7 @@ from eve import Eve
 from flask import render_template, request
 
 # Heroku support: bind to PORT if defined, otherwise default to 5000.
-from chess_game.board import make_board
+from chess_game._board import make_board
 
 if 'PORT' in os.environ:
     port = int(os.environ.get('PORT'))

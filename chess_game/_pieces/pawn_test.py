@@ -1,5 +1,5 @@
-from chess_game.board import make_board, _make_board_empty
-from chess_game.pieces.pawn import Pawn
+from chess_game._board import make_board, _make_board_empty
+from chess_game._pieces.pawn import Pawn
 
 
 def test_create_pawn():

@@ -1,10 +1,10 @@
 import copy
 
-from chess_game.board import make_board
+from chess_game._board import make_board
+from chess_game._pieces.pawn import Pawn
 from chess_game.chess_game import ChessGame
 from chess_game.commands.move_command import MoveCommand
 from chess_game.commands.undo_command import UndoCommand
-from chess_game.pieces.pawn import Pawn
 
 
 def game_event_loop(chess_game):

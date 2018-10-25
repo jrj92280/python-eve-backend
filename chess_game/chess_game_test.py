@@ -1,4 +1,4 @@
-from chess_game.board import make_board
+from chess_game._board import make_board
 from chess_game.chess_game import ChessGame
 
 
