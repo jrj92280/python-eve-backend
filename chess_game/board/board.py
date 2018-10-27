@@ -1,5 +1,10 @@
 from chess_game.board.cell import Cell
+from chess_game.pieces.bishop import Bishop
+from chess_game.pieces.king import King
+from chess_game.pieces.knight import Knight
 from chess_game.pieces.pawn import Pawn
+from chess_game.pieces.queen import Queen
+from chess_game.pieces.rook import Rook
 
 
 class Board:
@@ -18,13 +23,27 @@ class Board:
                     pawn = Pawn(is_white=is_white)
                     cell.piece = pawn
 
+            if row_index == 1 or row_index == 8:
+                is_white = row_index == 1
+                king = King(is_white=is_white)
+                queen = Queen(is_white=is_white)
+
+                board_row[0].piece = Rook(is_white=is_white)
+                board_row[1].piece = Knight(is_white=is_white)
+                board_row[2].piece = Bishop(is_white=is_white)
+                board_row[3].piece = king if is_white else queen
+                board_row[4].piece = queen if is_white else king
+                board_row[5].piece = Bishop(is_white=is_white)
+                board_row[6].piece = Knight(is_white=is_white)
+                board_row[7].piece = Rook(is_white=is_white)
+
             board.append(board_row)
 
-        # white_pieces = ["WR", "WH", "WB", "WK", "WQ", "WB", "WH", "WR"]
-        # game_board[0] = white_pieces
-        #
-        # black_pieces = ["BR", "BH", "BB", "BQ", "BK", "BB", "BH", "BR"]
-        # game_board[7] = black_pieces
-        # # print("\n".join([str(row) for row in game_board]))
-
         self.board = board
+
+    def __str__(self):
+        board_str = '\n'.join(
+            ' '.join([str(cell) if cell.piece else '##'
+                      for cell in row])
+            for row in self.board)
+        return board_str

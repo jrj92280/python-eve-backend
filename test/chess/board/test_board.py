@@ -28,17 +28,22 @@ def test_game_board_has_empty_spaces():
         for cell in board_row:
             assert '' == str(cell)
 
-# def test_game_board_has_white_pieces():
-#     white_pieces = ["WR", "WH", "WB", "WK", "WQ", "WB", "WH", "WR"]
-#
-#     board = make_board()
-#
-#     assert white_pieces == board[0]
-#
-#
-# def test_game_board_has_black_pieces():
-#     black_pieces = ["BR", "BH", "BB", "BQ", "BK", "BB", "BH", "BR"]
-#
-#     board = make_board()
-#
-#     assert black_pieces == board[7]
+
+def test_game_board_has_white_pieces():
+    expected_white_pieces = ["wr", "wh", "wb", "wk", "wq", "wb", "wh", "wr"]
+
+    board = Board()
+    white_row = board.board[0]
+
+    for index, cell in enumerate(white_row):
+        assert str(cell) == expected_white_pieces[index]
+
+
+def test_game_board_has_black_pieces():
+    expected_black_pieces = ["br", "bh", "bb", "bq", "bk", "bb", "bh", "br"]
+
+    board = Board()
+    black_row = board.board[7]
+
+    for index, cell in enumerate(black_row):
+        assert str(cell) == expected_black_pieces[index]
