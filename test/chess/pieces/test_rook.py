@@ -27,8 +27,15 @@ def board():
     bp bp bp bp bp bp bp bp
     br ## ## ## bk ## ## br
     """
-    print(board)
     return board
+
+
+def assert_lists_equivalent(expected, actual):
+    for item in expected:
+        assert item in actual
+
+    for item in actual:
+        assert item in expected
 
 
 def test_blocked(board):
@@ -39,14 +46,24 @@ def test_blocked(board):
 
     assert expected_hints == hints
 
-# def test_first_move(board):
-#     expected_hints = [[3, 1], [4, 1]]
-#     rook = board.board[1][0].piece
-# 
-#     hints = rook.hints(board.board)
-# 
-#     assert expected_hints == hints
-# 
+
+def test_move(board):
+    expected_hints = [[3, 5], [4, 5], [6, 5], [7, 5], [5, 1], [5, 2], [5, 3], [5, 4], [5, 6], [5, 7], [5, 8]]
+    rook = board.board[4][4].piece
+
+    hints = rook.hints(board.board)
+
+    assert_lists_equivalent(expected_hints, hints)
+
+
+def test_castle_bottom_left(board):
+    expected_hints = [[8, 2], [8, 3], [8, 4], [8, 5]]
+    rook = board.board[7][0].piece
+
+    hints = rook.hints(board.board)
+
+    assert_lists_equivalent(expected_hints, hints)
+
 # 
 # def test_move(board):
 #     expected_hints = [[4, 2]]
