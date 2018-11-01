@@ -29,25 +29,25 @@ class Rook(Piece):
                 self._append_hint_if_valid(position.x - index, position.y, board, hints)
 
         if not self.has_moved:
-            can_castle = self._is_open(position.x, 2, board)
-            can_castle &= self._is_open(position.x, 3, board)
-            can_castle &= self._is_open(position.x, 4, board)
+            can_castle = True
 
-            if not can_castle:
+            if position.y == 1:
+                can_castle = self._is_open(position.x, 2, board)
+                can_castle &= self._is_open(position.x, 3, board)
+
+                if not self.is_white:
+                    can_castle &= self._is_open(position.x, 4, board)
+            if position.y == 8:
                 can_castle = self._is_open(position.x, 7, board)
                 can_castle &= self._is_open(position.x, 6, board)
-            king = board[position.x - 1][4].piece
+
+                if self.is_white:
+                    can_castle &= self._is_open(position.x, 5, board)
+
+            king = board[position.x - 1][3].piece if self.is_white else board[position.x - 1][4].piece
             king = king and king.name == 'k'
 
             if can_castle and king:
-                hints.append([position.x, 5])
+                hints.append([position.x, 4] if self.is_white else [position.x, 5])
 
         return hints
-
-
-"""
-                hintCells.push([row, column + i])
-                hintCells.push([row, column - i])
-                hintCells.push([row + i, column])
-                hintCells.push([row - i, column])
-                """

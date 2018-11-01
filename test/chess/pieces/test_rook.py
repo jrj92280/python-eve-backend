@@ -64,56 +64,48 @@ def test_castle_bottom_left(board):
 
     assert_lists_equivalent(expected_hints, hints)
 
-# 
-# def test_move(board):
-#     expected_hints = [[4, 2]]
-#     rook = board.board[2][1].piece
-# 
-#     hints = rook.hints(board.board)
-# 
-#     assert expected_hints == hints
-#
-#
-# def test_move_black(board):
-#     expected_hints = [[5, 7]]
-#     rook = board.board[5][6].piece
-#
-#     hints = rook.hints(board.board)
-#
-#     assert expected_hints == hints
-#
-#
-# def test_blocked(board):
-#     expected_hints = []
-#     rook = board.board[1][7].piece
-#
-#     hints = rook.hints(board.board)
-#
-#     assert expected_hints == hints
-#
-#
-# def test_blocked_black(board):
-#     expected_hints = []
-#     rook = board.board[4][3].piece
-#
-#     hints = rook.hints(board.board)
-#
-#     assert expected_hints == hints
-#
-#
-# def test_attack(board):
-#     expected_hints = [[5, 5]]
-#     rook = board.board[3][3].piece
-#
-#     hints = rook.hints(board.board)
-#
-#     assert expected_hints == hints
-#
-#
-# def test_attack_black(board):
-#     expected_hints = [[2, 5], [2, 7]]
-#     rook = board.board[2][5].piece
-#
-#     hints = rook.hints(board.board)
-#
-#     assert expected_hints == hints
+
+def test_castle_bottom_right(board):
+    expected_hints = [[8, 7], [8, 6], [8, 5]]
+    rook = board.board[7][7].piece
+
+    hints = rook.hints(board.board)
+
+    assert_lists_equivalent(expected_hints, hints)
+
+
+def test_castle_top():
+    board = Board()
+
+    board.board[0][1].piece = None
+    board.board[0][2].piece = None
+    board.board[0][4].piece = None
+    board.board[0][5].piece = None
+    board.board[0][6].piece = None
+
+    """ board
+    wr ## ## wk ## ## ## wr
+    wp wp wp wp wp wp wp wp
+    ## ## ## ## ## ## ## ##
+    ## ## ## ## ## ## ## ##
+    ## ## ## ## ## ## ## ##
+    ## ## ## ## ## ## ## ##
+    bp bp bp bp bp bp bp bp
+    br bh bb bq bk bb bh br
+    """
+
+    # top left
+    expected_hints = [[1, 2], [1, 3], [1, 4]]
+    rook = board.board[0][0].piece
+
+    hints = rook.hints(board.board)
+
+    assert_lists_equivalent(expected_hints, hints)
+
+    # top right
+    expected_hints = [[1, 4], [1, 5], [1, 6], [1, 7]]
+    rook = board.board[0][7].piece
+
+    hints = rook.hints(board.board)
+
+    assert_lists_equivalent(expected_hints, hints)
