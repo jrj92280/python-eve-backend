@@ -2,6 +2,7 @@ import pytest
 
 from chess_game.board.board import Board
 from chess_game.pieces.rook import Rook
+from test.utils import assert_lists_equivalent
 
 
 @pytest.fixture
@@ -28,14 +29,6 @@ def board():
     br ## ## ## bk ## ## br
     """
     return board
-
-
-def assert_lists_equivalent(expected, actual):
-    for item in expected:
-        assert item in actual
-
-    for item in actual:
-        assert item in expected
 
 
 def test_blocked(board):
