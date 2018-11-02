@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Jacobs Chess</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}"/>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+
+    <!-- Custom styles for this template -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/chess.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+
+</head>
+<body>
+
+<div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
+    <h5 class="my-0 mr-md-auto font-weight-normal">Jacobs Chess</h5>
+    <!--
+    <nav class="my-2 my-md-0 mr-md-3">
+        <a class="p-2 text-dark" href="#">Features</a>
+        <a class="p-2 text-dark" href="#">Enterprise</a>
+        <a class="p-2 text-dark" href="#">Support</a>
+        <a class="p-2 text-dark" href="#">Pricing</a>
+    </nav>
+    -->
+    <a class="btn btn-outline-primary" href="#">Sign up</a>
+</div>
+
+<div class="container">
+    <div class="form-group w-50">
+        <form action="/chess">
+            <label for="user">Name:</label>
+            <input type="text" class="form-control" id="user" name="user">
+            <input type="submit" class="btn btn-primary"/>
+        </form>
+    </div>
+    {% if player_one %}
+    <div>
+        <h2>Player One: {{ player_one }}</h2>
+    </div>
+    {% endif %}
+    <table class="table table-bordered border-dark chess-board-table">
+        {% for row in board.board %}
+        {% set row_index = loop.index %}
+        {% set row_is_odd = loop.index % 2 %}
+        <tr>
+            {% for cell in row %}
+            {% set column_index = loop.index %}
+            {% set column_is_odd = column_index % 2 %}
+            {% set column_color = '#613613' if (row_is_odd and column_is_odd) or (not row_is_odd and not column_is_odd)
+            else
+            '#f6ddc7' %}
+            <td class="chess-board-cell" style="background-color: {{ column_color }}"
+                id="board-cell-{{ row_index }}-{{ column_index }}"
+                onclick="onCellClick({{ row_index }}, {{ column_index }}, '{{ cell.piece }}')">
+                {% if cell.piece %}
+                <img src="{{ url_for('static', filename='images/standard/' + str(cell.piece) + '.png') }}">
+                {% endif %}
+            </td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+<!--
+    <footer class="pt-4 my-md-5 pt-md-5 border-top">
+        <div class="row">
+            <div class="col-12 col-md">
+                <small class="d-block mb-3 text-muted">&copy; 2017-2018</small>
+            </div>
+        </div>
+    </footer>
+-->
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+
+<script>
+    var selectedCell = []
+    var hintCells = []
+
+    $(document).ready(function () {
+        // $("#preview-button").click(previewClick);
+        // $("#cancel-button").click(cancelClick);
+    });
+
+    function onCellClick(row, column, cell) {
+        console.log(row, column, cell)
+
+        // clear lingering formats
+        var allCells = ".chess-board-cell"
+        $(allCells).css({"border-color": "black", "border-width": "2px", "border-style": "solid"});
+
+        var isMove = false
+
+        for (var hint of hintCells) {
+            if (hint[0] === row && hint [1] === column) {
+                isMove = true
+            }
+        }
+
+        if (isMove) {
+            var existingCell = "#board-cell-" + selectedCell[0] + "-" + selectedCell[1]
+            $(existingCell).html('')
+            document.getElementById("board-cell-" + selectedCell[0] + "-" + selectedCell[1]).onclick = function () {
+            }
+
+            var targetCell = "#board-cell-" + row + "-" + column
+            $(targetCell).html('<img src="./static/images/standard/' + selectedCell[2] + '.png" />')
+
+            document.getElementById("board-cell-" + row + "-" + column).onclick = function () {
+            }
+            var piece = selectedCell[2]
+            $(targetCell).click(function () {
+                onCellClick(row, column, piece)
+            })
+
+            hintCells = []
+            selectedCell = []
+            return;
+        }
+
+        hintCells = []
+
+        if (cell === 'WP') {
+            selectedCell = [row, column, cell]
+
+            hintCells.push([row + 1, column])
+
+            if (row === 2) {
+                hintCells.push([row + 2, column])
+            }
+        }
+
+        if (cell === 'WH') {
+            selectedCell = [row, column, cell]
+
+            hintCells.push([row + 2, column + 1])
+            hintCells.push([row + 2, column - 1])
+            hintCells.push([row - 2, column + 1])
+            hintCells.push([row - 2, column - 1])
+            hintCells.push([row + 1, column + 2])
+            hintCells.push([row - 1, column + 2])
+            hintCells.push([row + 1, column - 2])
+            hintCells.push([row - 1, column - 2])
+        }
+
+        if (cell === 'WB') {
+            selectedCell = [row, column, cell]
+
+            for (var i = 1; i < 8; i++) {
+                hintCells.push([row + i, column + i])
+                hintCells.push([row + i, column - i])
+                hintCells.push([row - i, column + i])
+                hintCells.push([row - i, column - i])
+            }
+        }
+
+        if (cell === 'WR') {
+            selectedCell = [row, column, cell]
+
+            for (var i = 1; i < 8; i++) {
+                hintCells.push([row, column + i])
+                hintCells.push([row, column - i])
+                hintCells.push([row + i, column])
+                hintCells.push([row - i, column])
+            }
+        }
+
+        if (cell === 'WQ') {
+            selectedCell = [row, column, cell]
+
+            for (var i = 1; i < 8; i++) {
+                hintCells.push([row + i, column + i])
+                hintCells.push([row + i, column - i])
+                hintCells.push([row - i, column + i])
+                hintCells.push([row - i, column - i])
+                hintCells.push([row, column + i])
+                hintCells.push([row, column - i])
+                hintCells.push([row + i, column])
+                hintCells.push([row - i, column])
+            }
+        }
+
+
+        if (cell === 'WK') {
+            selectedCell = [row, column, cell]
+
+            hintCells.push([row + 1, column + 1])
+            hintCells.push([row + 1, column - 1])
+            hintCells.push([row - 1, column + 1])
+            hintCells.push([row - 1, column - 1])
+            hintCells.push([row, column + 1])
+            hintCells.push([row, column - 1])
+            hintCells.push([row + 1, column])
+            hintCells.push([row - 1, column])
+
+        }
+
+        if (cell === '##') {
+            return;
+        }
+
+        hintCells = hintCells.filter(
+            function (hint) {
+                var hintCellId = "#board-cell-" + hint[0] + "-" + hint[1]
+                var hintCell = $(hintCellId)
+                var color = selectedCell[2][0]
+                if (hintCell.html() && hintCell.html().indexOf('/' + color) !== -1) {
+                    return false
+                }
+                return true
+            }
+        )
+
+        for (var hint of hintCells) {
+            var hintCellId = "#board-cell-" + hint[0] + "-" + hint[1]
+            var hintCell = $(hintCellId)
+
+            hintCell.css({"border-color": "cornflowerblue", "border-width": "2px", "border-style": "solid"});
+        }
+
+        var cellId = "#board-cell-" + row + "-" + column
+        $(cellId).css({"border-color": "yellow", "border-width": "2px", "border-style": "solid"});
+
+        /*
+        var content = $("#content").val();
+        var uid = localStorage.getItem("uid");
+        $.post("/preview-layout", {content: content, uid: uid}, function (response) {
+            var url = '/view-preview-layout?uid=' + uid + "&preview_layout_id=" + response.data;
+            $('#preview').attr('src', url)
+            $('#preview-pane').show()
+        });
+        */
+    }
+
+</script>
+</body>
+</html>

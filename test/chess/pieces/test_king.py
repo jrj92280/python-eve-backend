@@ -66,13 +66,13 @@ def test_move():
 
     assert_lists_equivalent(expected_hints, hints)
 
-#
-# def test_move_with_threat(board):
-#     expected_hints = [
-#         [4, 4], [4, 6], [5, 6], [5, 4]
-#     ]
-#     king = board.board[4][4].piece
-#
-#     hints = king.hints(board.board)
-#
-#     assert_lists_equivalent(expected_hints, hints)
+
+def test_move_with_threat(board):
+    expected_hints = [
+        [4, 4], [4, 6], [5, 6], [5, 4]
+    ]
+    king = board.board[4][4].piece
+
+    hints = king.hints(board.board)
+
+    assert_lists_equivalent(expected_hints, hints)

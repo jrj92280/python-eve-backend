@@ -16,10 +16,20 @@ class Pawn(Piece):
         if not self.has_moved and self._is_open(position.x + (1 * move_direction), position.y, board):
             self._append_hint_if_valid(position.x + (2 * move_direction), position.y, board, hints, can_attack=False)
 
-        if self._is_enemy(position.x + (1 * move_direction), position.y - 1, board):
-            self._append_hint_if_valid(position.x + (1 * move_direction), position.y - 1, board, hints)
-
-        if self._is_enemy(position.x + (1 * move_direction), position.y + 1, board):
-            self._append_hint_if_valid(position.x + (1 * move_direction), position.y + 1, board, hints)
-
+        attacks = self.attacks(board)
+        hints.extend(attacks)
         return hints
+
+    def attacks(self, board, *, is_check_threats=False):
+        position = self.find_piece(board)
+        attacks = list()
+
+        move_direction = 1 if self.is_white else -1
+
+        if self._is_enemy(position.x + (1 * move_direction), position.y - 1, board) or is_check_threats:
+            self._append_hint_if_valid(position.x + (1 * move_direction), position.y - 1, board, attacks)
+
+        if self._is_enemy(position.x + (1 * move_direction), position.y + 1, board) or is_check_threats:
+            self._append_hint_if_valid(position.x + (1 * move_direction), position.y + 1, board, attacks)
+
+        return attacks

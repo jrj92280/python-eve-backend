@@ -5,6 +5,7 @@ from flask import render_template, request
 
 # Heroku support: bind to PORT if defined, otherwise default to 5000.
 from chess_game._board import make_board
+from chess_game.board.board import Board
 
 if 'PORT' in os.environ:
     port = int(os.environ.get('PORT'))
@@ -28,8 +29,16 @@ def hello():
     return "Hello Jason!"
 
 
-@app.route('/chess')
+@app.route('/xchess')
 def chess():
+    board = Board()
+    player_one = request.args.get("user") or request.form.get('user')
+
+    return render_template('chess_backend.html', board=board, player_one=player_one)
+
+
+@app.route('/chess')
+def chess_frontend():
     game_board = request.args.get("game_board") or request.form.get('game_board') or make_board()
     player_one = request.args.get("user") or request.form.get('user')
 
