@@ -39,6 +39,45 @@ class Board:
 
         self.board = board
 
+    @staticmethod
+    def build_board(board_str: str) -> 'Board':
+        board_rows = board_str.split('\n')
+
+        game_board = []
+        for row_index, board_row in enumerate(board_rows):
+            cells = board_row.split(' ')
+
+            row = []
+            for cell_index, cell in enumerate(cells):
+                row.append(Board._cell_factory(row_index, cell_index, cell))
+
+            game_board.append(row)
+
+        board = Board()
+        board.board = game_board
+        return board
+
+    @staticmethod
+    def _cell_factory(x: int, y: int, piece_str: str):
+        is_white = True if piece_str[0] == 'w' else False
+        piece_name = piece_str[1]
+
+        piece = None
+        if piece_name == 'p':
+            piece = Pawn(is_white=is_white)
+        elif piece_name == 'r':
+            piece = Rook(is_white=is_white)
+        elif piece_name == 'h':
+            piece = Knight(is_white=is_white)
+        elif piece_name == 'b':
+            piece = Bishop(is_white=is_white)
+        elif piece_name == 'k':
+            piece = King(is_white=is_white)
+        elif piece_name == 'q':
+            piece = Queen(is_white=is_white)
+
+        return Cell(x + 1, y + 1, piece, is_white=is_white)
+
     def __str__(self):
         board_str = '\n'.join(
             ' '.join([str(cell) if cell.piece else '##'

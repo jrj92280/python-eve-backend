@@ -1,3 +1,4 @@
+from bson import ObjectId
 from pymongo import MongoClient
 
 from chess_game.daos.environment import env
@@ -5,7 +6,7 @@ from chess_game.daos.environment import env
 
 class MongoDatabase:
     def __init__(self):
-        mongo_url = env("mongo_url") or "mongodb://localhost:27017/test"
+        mongo_url = env("mongo_url") or "mongodb://localhost:27017/chess"
         client = MongoClient(mongo_url)
         mongo_db = client.chess
 
@@ -16,4 +17,4 @@ class MongoDatabase:
         return str(insert_object.inserted_id)
 
     def get(self, collection: str, id: str):
-        return self.mongo_db[collection].find_one({'_id': id})
+        return self.mongo_db[collection].find_one({'_id': ObjectId(id)})

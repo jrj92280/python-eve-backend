@@ -32,13 +32,17 @@ def hello():
 @app.route('/xchess')
 def chess():
     board = Board()
+    # save board
+
     player_one = request.args.get("user") or request.form.get('user')
 
+    # pass board id into variable
     return render_template('chess_backend.html', board=board, player_one=player_one)
 
 
 @app.route('/chess/hint', methods=['POST'])
 def chess_hint():
+    # receive board id from args
     game_board = request.args.get("game_board") or request.form.get('game_board')
     row = request.args.get("row") or request.form.get('row')
     column = request.args.get("column") or request.form.get('column')
