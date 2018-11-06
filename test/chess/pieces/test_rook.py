@@ -14,7 +14,7 @@ def board():
 
     board.board[7][1].piece = None
     board.board[7][2].piece = None
-    board.board[7][3].piece = None
+    board.board[7][4].piece = None
     board.board[7][5].piece = None
     board.board[7][6].piece = None
 
@@ -26,7 +26,7 @@ def board():
     ## ## ## ## wr ## ## ##
     ## ## ## ## ## ## ## ##
     bp bp bp bp bp bp bp bp
-    br ## ## ## bk ## ## br
+    br ## ## bk ## ## ## br
     """
     return board
 
@@ -50,7 +50,7 @@ def test_move(board):
 
 
 def test_castle_bottom_left(board):
-    expected_hints = [[8, 2], [8, 3], [8, 4], [8, 5]]
+    expected_hints = [[8, 2], [8, 3], [8, 4]]
     rook = board.board[7][0].piece
 
     hints = rook.hints(board.board)
@@ -59,7 +59,8 @@ def test_castle_bottom_left(board):
 
 
 def test_castle_bottom_right(board):
-    expected_hints = [[8, 7], [8, 6], [8, 5]]
+    expected_hints = [[8, 7], [8, 6], [8, 5], [8, 4]]
+
     rook = board.board[7][7].piece
 
     hints = rook.hints(board.board)
@@ -84,7 +85,7 @@ def test_castle_top():
     ## ## ## ## ## ## ## ##
     ## ## ## ## ## ## ## ##
     bp bp bp bp bp bp bp bp
-    br bh bb bq bk bb bh br
+    br bh bb bk bq bb bh br
     """
 
     # top left

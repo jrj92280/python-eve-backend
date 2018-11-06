@@ -55,7 +55,7 @@ def test_move():
     ## ## ## ## ## ## ## ##
     ## ## ## ## ## ## ## ##
     bp bp bp bp bp bp bp bp
-    br bh bb bq bk bb bh br
+    br bh bb bk bq bb bh br
     """
     expected_hints = [
         [3, 3], [3, 4], [3, 5], [4, 3], [4, 5], [5, 3], [5, 4], [5, 5]

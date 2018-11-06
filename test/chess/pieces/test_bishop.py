@@ -20,7 +20,7 @@ def board():
     ## ## ## ## wb ## ## ##
     ## ## ## ## ## ## ## ##
     bp bp bp bp bp bp bp bp
-    br bh bb bq bk bb bh br
+    br bh bb bk bq bb bh br
     """
     return board
 

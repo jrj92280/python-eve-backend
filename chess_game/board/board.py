@@ -25,14 +25,12 @@ class Board:
 
             if row_index == 1 or row_index == 8:
                 is_white = row_index == 1
-                king = King(is_white=is_white)
-                queen = Queen(is_white=is_white)
 
                 board_row[0].piece = Rook(is_white=is_white)
                 board_row[1].piece = Knight(is_white=is_white)
                 board_row[2].piece = Bishop(is_white=is_white)
-                board_row[3].piece = king if is_white else queen
-                board_row[4].piece = queen if is_white else king
+                board_row[3].piece = King(is_white=is_white)
+                board_row[4].piece = Queen(is_white=is_white)
                 board_row[5].piece = Bishop(is_white=is_white)
                 board_row[6].piece = Knight(is_white=is_white)
                 board_row[7].piece = Rook(is_white=is_white)

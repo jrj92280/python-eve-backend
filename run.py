@@ -38,7 +38,7 @@ def chess():
 
 
 @app.route('/chess/hint', methods=['POST'])
-def chess():
+def chess_hint():
     game_board = request.args.get("game_board") or request.form.get('game_board')
     row = request.args.get("row") or request.form.get('row')
     column = request.args.get("column") or request.form.get('column')

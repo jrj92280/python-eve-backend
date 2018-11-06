@@ -34,20 +34,15 @@ class Rook(Piece):
             if position.y == 1:
                 can_castle = self._is_open(position.x, 2, board)
                 can_castle &= self._is_open(position.x, 3, board)
-
-                if not self.is_white:
-                    can_castle &= self._is_open(position.x, 4, board)
             if position.y == 8:
                 can_castle = self._is_open(position.x, 7, board)
                 can_castle &= self._is_open(position.x, 6, board)
+                can_castle &= self._is_open(position.x, 5, board)
 
-                if self.is_white:
-                    can_castle &= self._is_open(position.x, 5, board)
-
-            king = board[position.x - 1][3].piece if self.is_white else board[position.x - 1][4].piece
+            king = board[position.x - 1][3].piece
             king = king and king.name == 'k'
 
             if can_castle and king:
-                hints.append([position.x, 4] if self.is_white else [position.x, 5])
+                hints.append([position.x, 4])
 
         return hints

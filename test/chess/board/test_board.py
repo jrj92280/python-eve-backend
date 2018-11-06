@@ -40,7 +40,7 @@ def test_game_board_has_white_pieces():
 
 
 def test_game_board_has_black_pieces():
-    expected_black_pieces = ["br", "bh", "bb", "bq", "bk", "bb", "bh", "br"]
+    expected_black_pieces = ["br", "bh", "bb", "bk", "bq", "bb", "bh", "br"]
 
     board = Board()
     black_row = board.board[7]
