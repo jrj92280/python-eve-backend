@@ -6,6 +6,8 @@ from flask import render_template, request, jsonify
 # Heroku support: bind to PORT if defined, otherwise default to 5000.
 from chess_game._board import make_board
 from chess_game.board.board import Board
+from chess_game.daos.board_dao import BoardDao
+from chess_game.daos.mongo import MongoDatabase
 
 if 'PORT' in os.environ:
     port = int(os.environ.get('PORT'))
@@ -19,10 +21,12 @@ else:
 tmpl_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'templates')
 static_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static')
 
-os.environ['FLASK_ENV']='development'
+os.environ['FLASK_ENV'] = 'development'
 
 app = Eve(template_folder=tmpl_dir,
           static_folder=static_dir)
+
+board_dao = BoardDao(MongoDatabase())
 
 @app.route('/hello')
 def hello():
@@ -32,22 +36,23 @@ def hello():
 @app.route('/xchess')
 def chess():
     board = Board()
-    # save board
-
+    board_id = board_dao.create(board)
     player_one = request.args.get("user") or request.form.get('user')
 
     # pass board id into variable
-    return render_template('chess_backend.html', board=board, player_one=player_one)
+    return render_template('chess_backend.html', board=board, player_one=player_one, board_id=board_id)
 
 
-@app.route('/chess/hint', methods=['POST'])
+@app.route('/chess/hints', methods=['POST'])
 def chess_hint():
     # receive board id from args
-    game_board = request.args.get("game_board") or request.form.get('game_board')
+    board_id = request.args.get("board_id") or request.form.get('board_id')
     row = request.args.get("row") or request.form.get('row')
     column = request.args.get("column") or request.form.get('column')
-    piece = game_board[row, column].piece
-    hints = piece.hints()
+
+    board = board_dao.find_by_id(board_id)
+    piece = board.board[int(row) - 1][int(column) - 1].piece
+    hints = piece.hints(board.board)
 
     return jsonify(hints)
 

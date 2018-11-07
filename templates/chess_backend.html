@@ -30,6 +30,9 @@
             <input type="submit" class="btn btn-primary"/>
         </form>
     </div>
+    <div>
+        <p>Game Id: {{board_id}}</p>
+    </div>
     {% if player_one %}
     <div>
         <h2>Player One: {{ player_one }}</h2>
@@ -80,152 +83,80 @@
         var allCells = ".chess-board-cell"
         $(allCells).css({"border-color": "black", "border-width": "2px", "border-style": "solid"});
 
-        $.post("/chess/hints", {content: content, uid: uid}, function (response) {
-            var url = '/view-preview-layout?uid=' + uid + "&preview_layout_id=" + response.data;
-            $('#preview').attr('src', url)
-            $('#preview-pane').show()
-        });
-        var isMove = false
-
-        for (var hint of hintCells) {
-            if (hint[0] === row && hint [1] === column) {
-                isMove = true
-            }
-        }
-
-        if (isMove) {
-            var existingCell = "#board-cell-" + selectedCell[0] + "-" + selectedCell[1]
-            $(existingCell).html('')
-            document.getElementById("board-cell-" + selectedCell[0] + "-" + selectedCell[1]).onclick = function () {
-            }
-
-            var targetCell = "#board-cell-" + row + "-" + column
-            $(targetCell).html('<img src="./static/images/standard/' + selectedCell[2] + '.png" />')
-
-            document.getElementById("board-cell-" + row + "-" + column).onclick = function () {
-            }
-            var piece = selectedCell[2]
-            $(targetCell).click(function () {
-                onCellClick(row, column, piece)
-            })
-
-            hintCells = []
-            selectedCell = []
+        if (cell === 'None') {
             return;
         }
 
-        hintCells = []
+        selectedCell = [row, column, cell]
 
-        if (cell === 'WP') {
-            selectedCell = [row, column, cell]
+        $.post("/chess/hints", {board_id: '{{ board_id }}', row: row, column: column}, function (response) {
+            hintCells = response;
 
-            hintCells.push([row + 1, column])
-
-            if (row === 2) {
-                hintCells.push([row + 2, column])
-            }
-        }
-
-        if (cell === 'WH') {
-            selectedCell = [row, column, cell]
-
-            hintCells.push([row + 2, column + 1])
-            hintCells.push([row + 2, column - 1])
-            hintCells.push([row - 2, column + 1])
-            hintCells.push([row - 2, column - 1])
-            hintCells.push([row + 1, column + 2])
-            hintCells.push([row - 1, column + 2])
-            hintCells.push([row + 1, column - 2])
-            hintCells.push([row - 1, column - 2])
-        }
-
-        if (cell === 'WB') {
-            selectedCell = [row, column, cell]
-
-            for (var i = 1; i < 8; i++) {
-                hintCells.push([row + i, column + i])
-                hintCells.push([row + i, column - i])
-                hintCells.push([row - i, column + i])
-                hintCells.push([row - i, column - i])
-            }
-        }
-
-        if (cell === 'WR') {
-            selectedCell = [row, column, cell]
-
-            for (var i = 1; i < 8; i++) {
-                hintCells.push([row, column + i])
-                hintCells.push([row, column - i])
-                hintCells.push([row + i, column])
-                hintCells.push([row - i, column])
-            }
-        }
-
-        if (cell === 'WQ') {
-            selectedCell = [row, column, cell]
-
-            for (var i = 1; i < 8; i++) {
-                hintCells.push([row + i, column + i])
-                hintCells.push([row + i, column - i])
-                hintCells.push([row - i, column + i])
-                hintCells.push([row - i, column - i])
-                hintCells.push([row, column + i])
-                hintCells.push([row, column - i])
-                hintCells.push([row + i, column])
-                hintCells.push([row - i, column])
-            }
-        }
+            var cellId = "#board-cell-" + row + "-" + column
+            $(cellId).css({"border-color": "yellow", "border-width": "2px", "border-style": "solid"});
 
 
-        if (cell === 'WK') {
-            selectedCell = [row, column, cell]
-
-            hintCells.push([row + 1, column + 1])
-            hintCells.push([row + 1, column - 1])
-            hintCells.push([row - 1, column + 1])
-            hintCells.push([row - 1, column - 1])
-            hintCells.push([row, column + 1])
-            hintCells.push([row, column - 1])
-            hintCells.push([row + 1, column])
-            hintCells.push([row - 1, column])
-
-        }
-
-        if (cell === '##') {
-            return;
-        }
-
-        hintCells = hintCells.filter(
-            function (hint) {
+            for (var hint of hintCells) {
                 var hintCellId = "#board-cell-" + hint[0] + "-" + hint[1]
                 var hintCell = $(hintCellId)
-                var color = selectedCell[2][0]
-                if (hintCell.html() && hintCell.html().indexOf('/' + color) !== -1) {
-                    return false
-                }
-                return true
+
+                hintCell.css({"border-color": "cornflowerblue", "border-width": "2px", "border-style": "solid"});
             }
-        )
-
-        for (var hint of hintCells) {
-            var hintCellId = "#board-cell-" + hint[0] + "-" + hint[1]
-            var hintCell = $(hintCellId)
-
-            hintCell.css({"border-color": "cornflowerblue", "border-width": "2px", "border-style": "solid"});
-        }
-
-        var cellId = "#board-cell-" + row + "-" + column
-        $(cellId).css({"border-color": "yellow", "border-width": "2px", "border-style": "solid"});
-
-        /*
-        var content = $("#content").val();
-        var uid = localStorage.getItem("uid");
-        $.post("/preview-layout", {content: content, uid: uid}, function (response) {
-            var url = '/view-preview-layout?uid=' + uid + "&preview_layout_id=" + response.data;
-            $('#preview').attr('src', url)
-            $('#preview-pane').show()
         });
-        */
+
+        //
+        // var isMove = false
+        //
+        // for (var hint of hintCells) {
+        //     if (hint[0] === row && hint [1] === column) {
+        //         isMove = true
+        //     }
+        // }
+        //
+        // if (isMove) {
+        //     var existingCell = "#board-cell-" + selectedCell[0] + "-" + selectedCell[1]
+        //     $(existingCell).html('')
+        //     document.getElementById("board-cell-" + selectedCell[0] + "-" + selectedCell[1]).onclick = function () {
+        //     }
+        //
+        //     var targetCell = "#board-cell-" + row + "-" + column
+        //     $(targetCell).html('<img src="./static/images/standard/' + selectedCell[2] + '.png" />')
+        //
+        //     document.getElementById("board-cell-" + row + "-" + column).onclick = function () {
+        //     }
+        //     var piece = selectedCell[2]
+        //     $(targetCell).click(function () {
+        //         onCellClick(row, column, piece)
+        //     })
+        //
+        //     hintCells = []
+        //     selectedCell = []
+        //     return;
+        // }
+
+        // -------
+        // hintCells = hintCells.filter(
+        //     function (hint) {
+        //         var hintCellId = "#board-cell-" + hint[0] + "-" + hint[1]
+        //         var hintCell = $(hintCellId)
+        //         var color = selectedCell[2][0]
+        //         if (hintCell.html() && hintCell.html().indexOf('/' + color) !== -1) {
+        //             return false
+        //         }
+        //         return true
+        //     }
+        // )
+        //
+        // for (var hint of hintCells) {
+        //     var hintCellId = "#board-cell-" + hint[0] + "-" + hint[1]
+        //     var hintCell = $(hintCellId)
+        //
+        //     hintCell.css({"border-color": "cornflowerblue", "border-width": "2px", "border-style": "solid"});
+        // }
+        //
+        // var cellId = "#board-cell-" + row + "-" + column
+        // $(cellId).css({"border-color": "yellow", "border-width": "2px", "border-style": "solid"});
+
     }
 
 </script>
