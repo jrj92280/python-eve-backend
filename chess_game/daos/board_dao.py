@@ -16,3 +16,8 @@ class BoardDao:
         board_model = self._mongo_database.get(self._collection, board_id)
         board = Board.build_board(board_model['board'])
         return board
+
+    def update(self, board_id, board):
+        # return self._mongo_database[self._collection].update_one(
+        #   {'_id': ObjectId(board_id)}, {"$set": {'board': str(board)}})
+        pass
