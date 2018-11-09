@@ -53,6 +53,6 @@ def test_dao_update_board(mongo_database):
     board_dao.update(board_id, updated_board)
     loaded_board = board_dao.find_by_id(board_id)
 
-    # for row_index, row in enumerate(loaded_board.board):
-    #     for cell_index, cell in enumerate(row):
-    #         assert str(updated_board.board[row_index][cell_index]) == str(cell)
+    for row_index, row in enumerate(loaded_board.board):
+        for cell_index, cell in enumerate(row):
+            assert str(updated_board.board[row_index][cell_index]) == str(cell)

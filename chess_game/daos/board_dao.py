@@ -1,3 +1,5 @@
+from bson import ObjectId
+
 from chess_game.board.board import Board
 
 
@@ -18,6 +20,5 @@ class BoardDao:
         return board
 
     def update(self, board_id, board):
-        # return self._mongo_database[self._collection].update_one(
-        #   {'_id': ObjectId(board_id)}, {"$set": {'board': str(board)}})
-        pass
+        return self._mongo_database.mongo_db[self._collection].update_one(
+            {'_id': ObjectId(board_id)}, {"$set": {'board': str(board)}})

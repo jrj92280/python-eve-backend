@@ -102,6 +102,8 @@
                 var cellId = "#board-cell-" + row + "-" + column
                 $(cellId).css({"border-color": "yellow", "border-width": "2px", "border-style": "solid"});
                 selectedCell = [row, column, cell]
+                console.log('Selected Cell Set')
+                console.log(selectedCell)
 
 
                 for (var hint of hintCells) {
@@ -125,18 +127,17 @@
             var targeted = response.targeted
             var targetedId = "board-cell-" + targeted[0] + "-" + targeted[1];
 
-            $(existingCell).html('#' + selectedId)
+            var _selectedCell = '#' + selectedId
+            $(_selectedCell).html('')
             document.getElementById(selectedId).onclick = function () {
+                onCellClick(selected[0], selected[1], 'None')
             }
 
             var targetCell = "#" + targetedId
             $(targetCell).html('<img src="./static/images/standard/' + selected[2] + '.png" />')
 
-            document.getElementById(targetedId).onclick = function () {
-            }
-
             var piece = selected[2]
-            $(targetCell).onclick = function () {
+            document.getElementById(targetedId).onclick = function () {
                 onCellClick(targeted[0], targeted[1], piece)
             }
 

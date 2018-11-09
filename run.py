@@ -72,7 +72,9 @@ def chess_move():
 
     game_board[int(targeted[0]) - 1][int(targeted[1]) - 1].piece = piece
 
-    print()
+    board_dao.update(board_id, board)
+    print(board)
+    return jsonify({'targeted': targeted, 'selected': selected})
 
 
 @app.route('/chess')
