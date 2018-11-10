@@ -53,7 +53,7 @@
                 id="board-cell-{{ row_index }}-{{ column_index }}"
                 onclick="onCellClick({{ row_index }}, {{ column_index }}, '{{ cell.piece }}')">
                 {% if cell.piece %}
-                <img src="{{ url_for('static', filename='images/standard/' + cell.piece|string + '.png') }}">
+                <img src="{{ url_for('static', filename='images/standard/' + cell.piece.image + '.png') }}">
                 {% endif %}
             </td>
             {% endfor %}
@@ -85,7 +85,7 @@
         var isMove = false
 
         for (var hint of hintCells) {
-            if (hint[0] === row && hint [1] === column) {
+            if (hint[0] == row && hint [1] == column) {
                 isMove = true
             }
         }
@@ -102,9 +102,6 @@
                 var cellId = "#board-cell-" + row + "-" + column
                 $(cellId).css({"border-color": "yellow", "border-width": "2px", "border-style": "solid"});
                 selectedCell = [row, column, cell]
-                console.log('Selected Cell Set')
-                console.log(selectedCell)
-
 
                 for (var hint of hintCells) {
                     var hintCellId = "#board-cell-" + hint[0] + "-" + hint[1]
@@ -115,8 +112,7 @@
             });
             return;
         }
-        console.log(selectedCell)
-        console.log([row, column])
+
         $.post("/chess/move", {
             board_id: '{{ board_id }}',
             selected: selectedCell,
@@ -127,6 +123,8 @@
             var targeted = response.targeted
             var targetedId = "board-cell-" + targeted[0] + "-" + targeted[1];
 
+            console.log('Selected Cell cleared')
+            console.log(selectedCell)
             var _selectedCell = '#' + selectedId
             $(_selectedCell).html('')
             document.getElementById(selectedId).onclick = function () {
@@ -134,7 +132,7 @@
             }
 
             var targetCell = "#" + targetedId
-            $(targetCell).html('<img src="./static/images/standard/' + selected[2] + '.png" />')
+            $(targetCell).html('<img src="./static/images/standard/' + selected[2].slice(0, 2) + '.png" />')
 
             var piece = selected[2]
             document.getElementById(targetedId).onclick = function () {

@@ -19,15 +19,16 @@ def board():
     board.board[7][6].piece = None
 
     """ board
-    wr wh wb wk wq wb wh ##
-    wp wp wp wp wp wp wp wp
-    ## ## ## ## ## ## ## ##
-    ## ## ## ## ## ## ## ##
-    ## ## ## ## wr ## ## ##
-    ## ## ## ## ## ## ## ##
-    bp bp bp bp bp bp bp bp
-    br ## ## bk ## ## ## br
+    wr0 wh0 wb0 wk0 wq0 wb0 wh0 ###
+    wp0 wp0 wp0 wp0 wp0 wp0 wp0 wp0
+    ### ### ### ### ### ### ### ###
+    ### ### ### ### ### ### ### ###
+    ### ### ### ### wr0 ### ### ###
+    ### ### ### ### ### ### ### ###
+    bp0 bp0 bp0 bp0 bp0 bp0 bp0 bp0
+    br0 ### ### bk0 ### ### ### br0
     """
+
     return board
 
 
@@ -77,15 +78,23 @@ def test_castle_top():
     board.board[0][5].piece = None
     board.board[0][6].piece = None
 
+    board.board[7][0].piece.has_moved = True
+    board.board[7][1].piece = None
+    board.board[7][2].piece = None
+    board.board[7][4].piece = None
+    board.board[7][5].piece = None
+    board.board[7][6].piece = None
+    board.board[7][7].piece.has_moved = True
+
     """ board
-    wr ## ## wk ## ## ## wr
-    wp wp wp wp wp wp wp wp
-    ## ## ## ## ## ## ## ##
-    ## ## ## ## ## ## ## ##
-    ## ## ## ## ## ## ## ##
-    ## ## ## ## ## ## ## ##
-    bp bp bp bp bp bp bp bp
-    br bh bb bk bq bb bh br
+    wr0 ### ### wk0 ### ### ### wr0
+    wp0 wp0 wp0 wp0 wp0 wp0 wp0 wp0
+    ### ### ### ### ### ### ### ###
+    ### ### ### ### ### ### ### ###
+    ### ### ### ### ### ### ### ###
+    ### ### ### ### ### ### ### ###
+    bp0 bp0 bp0 bp0 bp0 bp0 bp0 bp0
+    br1 ### ### bk0 ### ### ### br1
     """
 
     # top left
@@ -99,6 +108,56 @@ def test_castle_top():
     # top right
     expected_hints = [[1, 4], [1, 5], [1, 6], [1, 7]]
     rook = board.board[0][7].piece
+
+    hints = rook.hints(board.board)
+
+    assert_lists_equivalent(expected_hints, hints)
+
+    # bottom left
+    expected_hints = [[8, 2], [8, 3]]
+    rook = board.board[7][0].piece
+
+    hints = rook.hints(board.board)
+
+    assert_lists_equivalent(expected_hints, hints)
+
+    # bottom right
+    expected_hints = [[8, 5], [8, 6], [8, 7]]
+    rook = board.board[7][7].piece
+
+    hints = rook.hints(board.board)
+
+    assert_lists_equivalent(expected_hints, hints)
+
+    board.board[7][0].piece.has_moved = False
+    board.board[7][7].piece.has_moved = False
+    board.board[7][3].piece.has_moved = True  # king
+
+
+def test_cant_castle_king_move():
+    board = Board()
+
+    board.board[7][3].piece.has_moved = True
+
+    board.board[7][1].piece = None
+    board.board[7][2].piece = None
+    board.board[7][4].piece = None
+    board.board[7][5].piece = None
+    board.board[7][6].piece = None
+
+    """ board
+    wr0 wh0 wb0 wk0 wq0 wb0 wh0 wr0
+    wp0 wp0 wp0 wp0 wp0 wp0 wp0 wp0
+    ### ### ### ### ### ### ### ###
+    ### ### ### ### ### ### ### ###
+    ### ### ### ### ### ### ### ###
+    ### ### ### ### ### ### ### ###
+    bp0 bp0 bp0 bp0 bp0 bp0 bp0 bp0
+    br0 ### ### bk1 ### ### ### br0
+    """
+
+    expected_hints = [[8, 5], [8, 6], [8, 7]]
+    rook = board.board[7][7].piece
 
     hints = rook.hints(board.board)
 

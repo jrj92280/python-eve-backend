@@ -13,11 +13,11 @@ def test_game_board_has_pawns():
 
     board_white_pawn_row = board.board[1]
     for cell in board_white_pawn_row:
-        assert 'wp' == str(cell)
+        assert 'wp0' == str(cell)
 
     board_black_pawn_row = board.board[6]
     for cell in board_black_pawn_row:
-        assert 'bp' == str(cell)
+        assert 'bp0' == str(cell)
 
 
 def test_game_board_has_empty_spaces():
@@ -30,7 +30,7 @@ def test_game_board_has_empty_spaces():
 
 
 def test_game_board_has_white_pieces():
-    expected_white_pieces = ["wr", "wh", "wb", "wk", "wq", "wb", "wh", "wr"]
+    expected_white_pieces = ["wr0", "wh0", "wb0", "wk0", "wq0", "wb0", "wh0", "wr0"]
 
     board = Board()
     white_row = board.board[0]
@@ -40,7 +40,7 @@ def test_game_board_has_white_pieces():
 
 
 def test_game_board_has_black_pieces():
-    expected_black_pieces = ["br", "bh", "bb", "bk", "bq", "bb", "bh", "br"]
+    expected_black_pieces = ["br0", "bh0", "bb0", "bk0", "bq0", "bb0", "bh0", "br0"]
 
     board = Board()
     black_row = board.board[7]

@@ -13,6 +13,10 @@ class Piece:
                     position = cell
         return position
 
+    @property
+    def image(self):
+        return str(self)[:2]
+
     @staticmethod
     def _is_valid_position(position_x, position_y, board):
         index_x = position_x - 1
@@ -43,4 +47,5 @@ class Piece:
         return piece and not piece.color == self.color
 
     def __str__(self):
-        return f'{self.color[0]}{self.name}'
+        move_indicator = 1 if self.has_moved else 0
+        return f'{self.color[0]}{self.name}{move_indicator}'

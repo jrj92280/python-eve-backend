@@ -61,6 +61,7 @@ class Board:
     def _cell_factory(x: int, y: int, piece_str: str):
         is_white = True if piece_str[0] == 'w' else False
         piece_name = piece_str[1]
+        has_moved = piece_str[2] == "1"
 
         piece = None
         if piece_name == 'p':
@@ -76,11 +77,14 @@ class Board:
         elif piece_name == 'q':
             piece = Queen(is_white=is_white)
 
+        if piece:
+            piece.has_moved = has_moved
+
         return Cell(x + 1, y + 1, piece, is_white=is_white)
 
     def __str__(self):
         board_str = '\n'.join(
-            ' '.join([str(cell) if cell.piece else '##'
+            ' '.join([str(cell) if cell.piece else '###'
                       for cell in row])
             for row in self.board)
         return board_str

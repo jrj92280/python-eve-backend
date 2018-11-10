@@ -29,6 +29,9 @@ class Rook(Piece):
                 self._append_hint_if_valid(position.x - index, position.y, board, hints)
 
         if not self.has_moved:
+            king = board[position.x - 1][3].piece
+            king = king and king.name == 'k' and not king.has_moved
+
             can_castle = True
 
             if position.y == 1:
@@ -38,9 +41,6 @@ class Rook(Piece):
                 can_castle = self._is_open(position.x, 7, board)
                 can_castle &= self._is_open(position.x, 6, board)
                 can_castle &= self._is_open(position.x, 5, board)
-
-            king = board[position.x - 1][3].piece
-            king = king and king.name == 'k'
 
             if can_castle and king:
                 hints.append([position.x, 4])

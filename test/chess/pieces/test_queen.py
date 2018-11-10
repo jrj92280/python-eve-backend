@@ -12,15 +12,16 @@ def board():
     board.board[4][4].piece = Queen()
 
     """ board
-    wr wh wb wk wq wb wh wr
-    wp wp wp wp wp wp wp wp
-    ## ## ## ## ## ## ## ##
-    ## ## ## ## ## ## ## ##
-    ## ## ## ## wq ## ## ##
-    ## ## ## ## ## ## ## ##
-    bp bp bp bp bp bp bp bp
-    br bh bb bk bq bb bh br
+    wr0 wh0 wb0 wk0 wq0 wb0 wh0 wr0
+    wp0 wp0 wp0 wp0 wp0 wp0 wp0 wp0
+    ### ### ### ### ### ### ### ###
+    ### ### ### ### ### ### ### ###
+    ### ### ### ### wq0 ### ### ###
+    ### ### ### ### ### ### ### ###
+    bp0 bp0 bp0 bp0 bp0 bp0 bp0 bp0
+    br0 bh0 bb0 bk0 bq0 bb0 bh0 br0
     """
+
     return board
 
 

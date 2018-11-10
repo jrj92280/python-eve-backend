@@ -71,6 +71,7 @@ def chess_move():
     game_board[int(selected[0]) - 1][int(selected[1]) - 1].piece = None
 
     game_board[int(targeted[0]) - 1][int(targeted[1]) - 1].piece = piece
+    piece.has_moved = True
 
     board_dao.update(board_id, board)
     print(board)

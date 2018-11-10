@@ -13,15 +13,16 @@ def board():
     board.board[4][3].piece = Knight()
 
     """ board
-    wr ## wb wk wq wb wh wr
-    wp wp wp wp wp wp wp wp
-    ## ## ## ## ## ## ## ##
-    ## ## ## ## ## ## ## ##
-    ## ## ## wh ## ## ## ##
-    ## ## ## ## ## ## ## ##
-    bp bp bp bp bp bp bp bp
-    br bh bb bk bq bb bh br
+    wr0 ### wb0 wk0 wq0 wb0 wh0 wr0
+    wp0 wp0 wp0 wp0 wp0 wp0 wp0 wp0
+    ### ### ### ### ### ### ### ###
+    ### ### ### ### ### ### ### ###
+    ### ### ### wh0 ### ### ### ###
+    ### ### ### ### ### ### ### ###
+    bp0 bp0 bp0 bp0 bp0 bp0 bp0 bp0
+    br0 bh0 bb0 bk0 bq0 bb0 bh0 br0
     """
+
     return board
 
 

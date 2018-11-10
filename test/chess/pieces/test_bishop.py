@@ -11,17 +11,19 @@ def board():
 
     board.board[0][5].piece = None
     board.board[4][4].piece = Bishop()
+    board.board[4][4].piece.has_moved = True
 
     """ board
-    wr wh wb wk wq ## wh wr
-    wp wp wp wp wp wp wp wp
-    ## ## ## ## ## ## ## ##
-    ## ## ## ## ## ## ## ##
-    ## ## ## ## wb ## ## ##
-    ## ## ## ## ## ## ## ##
-    bp bp bp bp bp bp bp bp
-    br bh bb bk bq bb bh br
+    wr0 wh0 wb0 wk0 wq0 ### wh0 wr0
+    wp0 wp0 wp0 wp0 wp0 wp0 wp0 wp0
+    ### ### ### ### ### ### ### ###
+    ### ### ### ### ### ### ### ###
+    ### ### ### ### wb1 ### ### ###
+    ### ### ### ### ### ### ### ###
+    bp0 bp0 bp0 bp0 bp0 bp0 bp0 bp0
+    br0 bh0 bb0 bk0 bq0 bb0 bh0 br0
     """
+
     return board
 
 

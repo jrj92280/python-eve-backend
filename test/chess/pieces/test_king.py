@@ -21,15 +21,16 @@ def board():
     board.board[7][6].piece = None
 
     """ board
-    wr wh wb wk wq wb wh wr
-    wp wp wp wp wp wp wp wp
-    ## ## ## ## ## ## ## ##
-    ## ## ## ## ## ## ## ##
-    ## ## ## ## wk bp ## ##
-    ## ## ## ## ## ## ## ##
-    bp bp bp bp bp ## bp bp
-    br ## ## ## bk ## ## br
+    wr0 wh0 wb0 wk0 wq0 wb0 wh0 wr0
+    wp0 wp0 wp0 wp0 wp0 wp0 wp0 wp0
+    ### ### ### ### ### ### ### ###
+    ### ### ### ### ### ### ### ###
+    ### ### ### ### wk0 bp0 ### ###
+    ### ### ### ### ### ### ### ###
+    bp0 bp0 bp0 bp0 bp0 ### bp0 bp0
+    br0 ### ### ### bq0 ### ### br0
     """
+
     return board
 
 
@@ -48,15 +49,16 @@ def test_move():
     board.board[3][3].piece = King()
 
     """ board
-    wr wh wb wk wq wb wh wr
-    wp wp wp wp wp wp wp wp
-    ## ## ## ## ## ## ## ##
-    ## ## ## wk ## ## ## ##
-    ## ## ## ## ## ## ## ##
-    ## ## ## ## ## ## ## ##
-    bp bp bp bp bp bp bp bp
-    br bh bb bk bq bb bh br
+    wr0 wh0 wb0 wk0 wq0 wb0 wh0 wr0
+    wp0 wp0 wp0 wp0 wp0 wp0 wp0 wp0
+    ### ### ### ### ### ### ### ###
+    ### ### ### wk0 ### ### ### ###
+    ### ### ### ### ### ### ### ###
+    ### ### ### ### ### ### ### ###
+    bp0 bp0 bp0 bp0 bp0 bp0 bp0 bp0
+    br0 bh0 bb0 bk0 bq0 bb0 bh0 br0
     """
+
     expected_hints = [
         [3, 3], [3, 4], [3, 5], [4, 3], [4, 5], [5, 3], [5, 4], [5, 5]
     ]
