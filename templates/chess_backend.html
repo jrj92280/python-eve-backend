@@ -72,59 +72,48 @@
     var hintCells = []
 
     $(document).ready(function () {
-        // $("#preview-button").click(previewClick);
-        // $("#cancel-button").click(cancelClick);
     });
 
     function onCellClick(row, column, cell) {
-        // clear lingering formats
+        clearSelection()
+
+        var isMove = willMove(hintCells, row, column)
+
+        if (isMove) {
+            var targetedCell = [row, column]
+            moveSelectedCellToTargetedCell(selectedCell, targetedCell)
+        }
+        else {
+            findHints(cell, row, column)
+        }
+    }
+
+    function clearSelection() {
         var allCells = ".chess-board-cell"
         $(allCells).css({"border-color": "black", "border-width": "2px", "border-style": "solid"});
+    }
 
-
+    function willMove(hintCells, row, column) {
         var isMove = false
-
         for (var hint of hintCells) {
-            if (hint[0] == row && hint [1] == column) {
+            if (String(hint[0]) === String(row) && String(hint[1]) === String(column)) {
                 isMove = true
             }
         }
+        return isMove
+    }
 
-        if (!isMove) {
-            if (cell === 'None') {
-                hintCells = [];
-                return;
-            }
-
-            $.post("/chess/hints", {board_id: '{{ board_id }}', row: row, column: column}, function (response) {
-                hintCells = response;
-
-                var cellId = "#board-cell-" + row + "-" + column
-                $(cellId).css({"border-color": "yellow", "border-width": "2px", "border-style": "solid"});
-                selectedCell = [row, column, cell]
-
-                for (var hint of hintCells) {
-                    var hintCellId = "#board-cell-" + hint[0] + "-" + hint[1]
-                    var hintCell = $(hintCellId)
-
-                    hintCell.css({"border-color": "cornflowerblue", "border-width": "2px", "border-style": "solid"});
-                }
-            });
-            return;
-        }
-
+    function moveSelectedCellToTargetedCell(selectedCell, targetedCell) {
         $.post("/chess/move", {
             board_id: '{{ board_id }}',
             selected: selectedCell,
-            targeted: [row, column]
+            targeted: targetedCell
         }, function (response) {
             var selected = response.selected
             var selectedId = "board-cell-" + selected[0] + "-" + selected[1];
             var targeted = response.targeted
             var targetedId = "board-cell-" + targeted[0] + "-" + targeted[1];
 
-            console.log('Selected Cell cleared')
-            console.log(selectedCell)
             var _selectedCell = '#' + selectedId
             $(_selectedCell).html('')
             document.getElementById(selectedId).onclick = function () {
@@ -142,6 +131,28 @@
             hintCells = []
             selectedCell = []
         })
+    }
+
+    function findHints(cell, row, column) {
+        if (cell === 'None') {
+            hintCells = [];
+            return;
+        }
+
+        $.post("/chess/hints", {board_id: '{{ board_id }}', row: row, column: column}, function (response) {
+            hintCells = response;
+
+            var cellId = "#board-cell-" + row + "-" + column
+            $(cellId).css({"border-color": "yellow", "border-width": "2px", "border-style": "solid"});
+            selectedCell = [row, column, cell]
+
+            for (var hint of hintCells) {
+                var hintCellId = "#board-cell-" + hint[0] + "-" + hint[1]
+                var hintCell = $(hintCellId)
+
+                hintCell.css({"border-color": "cornflowerblue", "border-width": "2px", "border-style": "solid"});
+            }
+        });
     }
 
 </script>
