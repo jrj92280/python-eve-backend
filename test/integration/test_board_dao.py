@@ -32,6 +32,17 @@ def test_dao_create_and_find_board(mongo_database):
             assert str(board.board[row_index][cell_index]) == str(cell)
 
 
+def test_dao_create_and_find_boards(mongo_database):
+    board = Board()
+    board_dao = BoardDao(mongo_database)
+
+    board_dao.create(board)
+    board_id = board_dao.create(board)
+    loaded_boards = board_dao.find_all()
+
+    assert len(loaded_boards) > 1
+    assert len([board for board in loaded_boards if board_id == str(board['_id'])])
+
 def test_find_updated_board(mongo_database):
     updated_board = board()
     board_dao = BoardDao(mongo_database)

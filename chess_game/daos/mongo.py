@@ -18,3 +18,6 @@ class MongoDatabase:
 
     def get(self, collection: str, id: str):
         return self.mongo_db[collection].find_one({'_id': ObjectId(id)})
+
+    def find(self, collection: str, filter: dict) -> list:
+        return self.mongo_db[collection].find(filter)

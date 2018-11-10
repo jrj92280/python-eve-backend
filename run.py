@@ -34,6 +34,12 @@ def hello():
     return "Hello Jason!"
 
 
+@app.route('/games')
+def games():
+    boards = board_dao.find_all()
+
+    return render_template('games.html', games=boards)
+
 @app.route('/xchess')
 def chess():
     board = Board()
