@@ -1,4 +1,5 @@
 from bson import ObjectId
+from environs import EnvError
 from pymongo import MongoClient
 
 from chess_game.daos.environment import env
@@ -6,7 +7,12 @@ from chess_game.daos.environment import env
 
 class MongoDatabase:
     def __init__(self):
-        mongo_url = env("mongo_url") or "mongodb://localhost:27017/chess"
+        try:
+            mongo_url = env("mongo_url")
+        except EnvError as e:
+            print(e)
+            mongo_url = "mongodb://localhost:27017/chess"
+
         client = MongoClient(mongo_url)
         mongo_db = client.chess
 

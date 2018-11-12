@@ -1,4 +1,7 @@
 from environs import Env
 
 env = Env()
-env.read_env(path="./.env")
+try:
+    env.read_env(path="./.env")
+except IOError as e:
+    print(e)
