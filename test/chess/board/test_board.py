@@ -1,5 +1,4 @@
-from chess_game.board.board import Board
-
+from chess_game.models.board import Board
 
 def test_board_init():
     board = Board()

@@ -1,6 +1,6 @@
 import pytest
 
-from chess_game.board.board import Board
+from chess_game.models.board import Board
 from chess_game.pieces.knight import Knight
 from test.utils import assert_lists_equivalent
 

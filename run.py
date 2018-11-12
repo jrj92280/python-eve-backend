@@ -5,9 +5,10 @@ from flask import render_template, request, jsonify
 
 # Heroku support: bind to PORT if defined, otherwise default to 5000.
 from chess_game._board import make_board
-from chess_game.board.board import Board
 from chess_game.daos.board_dao import BoardDao
+from chess_game.daos.game_dao import GameDao
 from chess_game.daos.mongo import MongoDatabase
+from chess_game.models.board import Board
 
 if 'PORT' in os.environ:
     port = int(os.environ.get('PORT'))
@@ -27,7 +28,7 @@ app = Eve(template_folder=tmpl_dir,
           static_folder=static_dir)
 
 board_dao = BoardDao(MongoDatabase())
-
+game_dao = GameDao(MongoDatabase())
 
 @app.route('/hello')
 def hello():
@@ -37,8 +38,8 @@ def hello():
 @app.route('/games')
 def games():
     boards = board_dao.find_all()
-
-    return render_template('games.html', games=boards)
+    games = game_dao.find_all()
+    return render_template('games.html', games=games, boards=boards)
 
 @app.route('/xchess')
 def chess():

@@ -1,4 +1,4 @@
-from chess_game.board.cell import Cell
+from chess_game.models.cell import Cell
 
 
 def test_cell_init():

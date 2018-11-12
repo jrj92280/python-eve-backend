@@ -1,4 +1,4 @@
-from chess_game.board.cell import Cell
+from chess_game.models.cell import Cell
 from chess_game.pieces.bishop import Bishop
 from chess_game.pieces.king import King
 from chess_game.pieces.knight import Knight

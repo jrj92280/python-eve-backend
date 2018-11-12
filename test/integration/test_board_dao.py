@@ -1,8 +1,8 @@
 import pytest
 
-from chess_game.board.board import Board
 from chess_game.daos.board_dao import BoardDao
 from chess_game.daos.mongo import MongoDatabase
+from chess_game.models.board import Board
 from test.chess.pieces.test_pawn import board
 
 

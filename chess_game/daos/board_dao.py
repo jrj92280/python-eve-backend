@@ -1,6 +1,6 @@
 from bson import ObjectId
 
-from chess_game.board.board import Board
+from chess_game.models.board import Board
 
 
 class BoardDao:
