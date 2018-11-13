@@ -9,6 +9,7 @@ from chess_game.daos.board_dao import BoardDao
 from chess_game.daos.game_dao import GameDao
 from chess_game.daos.mongo import MongoDatabase
 from chess_game.models.board import Board
+from chess_game.models.game import Game
 
 if 'PORT' in os.environ:
     port = int(os.environ.get('PORT'))
@@ -34,6 +35,11 @@ game_dao = GameDao(MongoDatabase())
 def hello():
     return "Hello Jason!"
 
+
+@app.route('/chess/game')
+def chess_game():
+    game = Game()
+    return render_template('game.html', game=game)
 
 @app.route('/games')
 def games():

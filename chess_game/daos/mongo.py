@@ -8,7 +8,7 @@ from chess_game.daos.environment import env
 class MongoDatabase:
     def __init__(self):
         try:
-            mongo_url = env("mongo_url")
+            mongo_url = env("MONGODB_URI")
         except EnvError as e:
             print(e)
             mongo_url = "mongodb://localhost:27017/chess"
