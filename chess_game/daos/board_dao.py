@@ -21,6 +21,7 @@ class BoardDao:
     def find_by_id(self, board_id):
         board_model = self._mongo_database.get(self._collection, board_id)
         board = Board.build_board(board_model['board'])
+        board._id = board_model['_id']
         return board
 
     def update(self, board_id, board):

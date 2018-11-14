@@ -30,8 +30,8 @@ def test_dao_create_and_find_game(mongo_database):
     loaded_game = game_dao.find_by_id(game_id)
 
     assert loaded_game['_id']
-    assert f'{now:%Y-%m-%d %H:%M:%S%z}' == loaded_game['start_date']
-    assert f'{then:%Y-%m-%d %H:%M:%S%z}' == loaded_game['end_date']
+    assert f'{now:%Y-%m-%d %H:%M:%S}' == loaded_game['start_date']
+    assert f'{then:%Y-%m-%d %H:%M:%S}' == loaded_game['end_date']
 
 
 def test_dao_create_and_find_games(mongo_database):

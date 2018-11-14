@@ -35,9 +35,9 @@
             <table class="table table-sm table-striped table-hover">
                 <thead>
                 <tr>
-                    <th style="width:50px" scope="col">Id</th>
-                    <th style="width:125px" scope="col">Created Date</th>
-                    <th scope="col">Name</th>
+                    <th style="width:200px" scope="col">Name</th>
+                    <th style="width:175px" scope="col">Created Date</th>
+                    <th scope="col">Id</th>
                     <th></th>
                 </tr>
                 </thead>
@@ -45,14 +45,13 @@
                 {% for game in games %}
                 <tr>
                     <td>
-                        {{ game['_id']|string }}
+                        {{ game['name'] }}
                     </td>
                     <td style="vertical-align:middle;min-width:175px;">
+                        {{ game['start_date'] }}
                     </td>
                     <td style="vertical-align:middle;">
-
-                    </td>
-                    <td style="vertical-align:middle;">
+                        {{ game['_id']|string }}
                     </td>
                 </tr>
                 {% endfor %}
