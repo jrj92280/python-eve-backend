@@ -47,14 +47,15 @@ def games():
     games = game_dao.find_all()
     return render_template('games.html', games=games, boards=boards)
 
-@app.route('/xchess')
+
+@app.route('/chess')
 def chess():
     board = Board()
     board_id = board_dao.create(board)
     player_one = get_arg('user')
 
     # pass board id into variable
-    return render_template('chess_backend.html', board=board, player_one=player_one, board_id=board_id)
+    return render_template('chess.html', board=board, player_one=player_one, board_id=board_id)
 
 
 @app.route('/chess/hints', methods=['POST'])
@@ -91,7 +92,7 @@ def chess_move():
     return jsonify({'targeted': targeted, 'selected': selected})
 
 
-@app.route('/chess')
+@app.route('/xchess')
 def chess_frontend():
     game_board = get_arg('game_board') or make_board()
     player_one = get_arg('user')

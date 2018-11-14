@@ -34,9 +34,12 @@
                 <input type="hidden" name="_id" id="_id" value="{{ game._id if game else '' }}"/>
                 <div class="mb-0 pb-1 form-group">
                     <div class="row mt-0 mb-2 mx-0 p-0 w-50">
-                        <select class="form-control" id="player_one._id" name="player">
+                        <select class="form-control" id="playerOneId" name="playerOneId" required>
                             <option value="" disabled selected>
                                 Select Player One
+                            </option>
+                            <option value=":Anonymous">
+                                Anonymous
                             </option>
                             {% for player in players %}
                             <option value="{{ player_one._id }}:{{ player.name }}">{{ player.name }}</option>
@@ -44,9 +47,12 @@
                         </select>
                     </div>
                     <div class="row mt-0 mb-2 mx-0 p-0 w-50">
-                        <select class="form-control" id="player_two._id" name="player">
+                        <select class="form-control" id="playerTwoId" name="playerTwoId" required>
                             <option value="" disabled selected>
                                 Select Player Two
+                            </option>
+                            <option value=":Anonymous">
+                                Anonymous
                             </option>
                             {% for player in players %}
                             <option value="{{ player_two._id }}:{{ player.name }}">{{ player.name }}</option>
@@ -57,48 +63,14 @@
                         <input class="form-control" title="Game Name" placeholder="Game Name" type="text" id="name"
                                name="name" value="{{ game.name if game else '' }}" required/>
                     </div>
-
-                    <div class="row mt-0 mb-2 mx-0 p-0">
-                        <div class="form-group">
-                            <div class="input-group date" id="_game_date" data-target-input="nearest">
-                                <input type="text" class="form-control datetimepicker-input" required name="gamed_date"
-                                       id="gamed_date" data-target="#_game_date"
-                                       value="{{ game.gamed_date if game else '' }}"/>
-                                <div class="input-group-append" data-target="#_game_date" data-toggle="datetimepicker">
-                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group ml-2">
-                            <div class="input-group date" id="_gamed_time" data-target-input="nearest">
-                                <input type="text" class="form-control datetimepicker-input" required name="gamed_time"
-                                       id="gamed_time" data-target="#_gamed_time"
-                                       value="{{ game.gamed_time if game else '' }}"/>
-                                <div class="input-group-append" data-target="#_gamed_time" data-toggle="datetimepicker">
-                                    <div class="input-group-text"><i class="fa fa-clock"></i></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row mp-0">
-                        <p class="mt-2 mb-1 pt-2 pb-0 text-danger" id="yamlErrorMessage" style="display:none"></p>
-                    </div>
-                    <div class="row mp-0">
-                        <label class="font-weight-bold" for="comment">Front-Page Layout:</label>
-                        <textarea title="Layout Content" class="form-control lined" rows="15" id="content"
-                                  name="content"
-                                  required>{{ content }}</textarea>
-                    </div>
                 </div>
 
                 <div class="row mp-0">
                     <input class="mt-2 mr-2 btn btn-primary" type="submit" value="Save Game"/>
-                    <input class="mt-2 mr-2 btn btn-success" id="preview-button" type="button" value="Preview Layout"/>
                     <input class="mt-2 mr-2 btn btn-secondary" id="cancel-button" type="button" value="Cancel"/>
                 </div>
+            </form>
         </div>
-        </form>
     </div>
 </div>
 
@@ -109,13 +81,27 @@
 
 <script>
     $(document).ready(function () {
-        // $('#_game_date').datetimepicker({
-        //     format: 'L'
-        // });
-        // $('#_gamed_time').datetimepicker({
-        //     format: 'LT'
-        // });
+        var playerOne = $('#playerOneId')
+        var playerTwo = $('#playerTwoId')
+        var name = $('#name')
+
+        playerOne.change(function () {
+            setGameName(playerOne, playerTwo, name)
+        })
+        playerTwo.change(function () {
+            setGameName(playerOne, playerTwo, name)
+        })
     });
+
+    function setGameName(playerOne, playerTwo, name) {
+        var splitPlayerOneName = playerOne.val() && playerOne.val().split(":")
+        var playerOneName = splitPlayerOneName && splitPlayerOneName.length > 1 ? splitPlayerOneName[1] : ''
+
+        var splitPlayerTwoName = playerTwo.val() && playerTwo.val().split(":")
+        var playerTwoName = splitPlayerTwoName && splitPlayerTwoName.length > 1 ? splitPlayerTwoName[1] : ''
+
+        name.val(playerOneName + ' vs ' + playerTwoName)
+    }
 </script>
 </body>
 </html>
