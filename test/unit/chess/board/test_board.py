@@ -1,5 +1,6 @@
 from chess_game.models.board import Board
 
+
 def test_board_init():
     board = Board()
     assert 8 == len(board.board)

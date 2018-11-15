@@ -1,15 +1,6 @@
-import pytest
-
 from chess_game.daos.board_dao import BoardDao
-from chess_game.daos.mongo import MongoDatabase
 from chess_game.models.board import Board
-from test.chess.pieces.test_pawn import board
-
-
-@pytest.fixture
-def mongo_database():
-    mongo_database = MongoDatabase()
-    return mongo_database
+from test.unit.chess.pieces.test_pawn import board
 
 
 def test_board_dao_init(mongo_database):
@@ -42,6 +33,7 @@ def test_dao_create_and_find_boards(mongo_database):
 
     assert len(loaded_boards) > 1
     assert len([board for board in loaded_boards if board_id == str(board['_id'])])
+
 
 def test_find_updated_board(mongo_database):
     updated_board = board()

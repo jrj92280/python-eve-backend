@@ -1,22 +1,12 @@
-import pytest
+from datetime import datetime, timedelta
 
 from chess_game.daos.game_dao import GameDao
-from chess_game.daos.mongo import MongoDatabase
 from chess_game.models.game import Game
-
-
-@pytest.fixture
-def mongo_database():
-    mongo_database = MongoDatabase()
-    return mongo_database
 
 
 def test_game_dao_init(mongo_database):
     game_dao = GameDao(mongo_database)
     assert mongo_database == game_dao._mongo_database
-
-
-from datetime import datetime, timedelta
 
 
 def test_dao_create_and_find_game(mongo_database):
