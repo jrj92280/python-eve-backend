@@ -10,7 +10,7 @@ class Player:
         game_json = dict()
         game_json['name'] = self.name
         game_json['stats'] = self.stats
-        game_json['games'] = [game._id for game in self.games] if self.games else None
+        game_json['games'] = [game._id for game in self.games] if self.games else []
 
         start_date = f'{self.start_date:%Y-%m-%d %H:%M:%S}' if self.start_date else None
         game_json['start_date'] = start_date
