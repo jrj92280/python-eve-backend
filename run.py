@@ -101,28 +101,10 @@ def players():
 @app.route('/chess/player', methods=['POST'])
 def create_player():
     # form values
-    player_one_value = get_arg("playerOneId")
-    player_one_id = player_one_value.split(":")[0]
-    player_one = None  # load player with player_dao
-
-    player_two_value = get_arg("playerTwoId")
-    player_two_id = player_two_value.split(":")[0]
-    player_two = None  # load player with player_dao
-
     name = get_arg("name")
-
-    # default values
-    board = Board()
-    board_id = board_dao.create(board)
-    board = board_dao.find_by_id(board_id)
-
     start_date = datetime.now()
-    player_data = {'move_count': 0, 'player_one_move_count': 0, 'player_two_move_count': 0, 'turn': 'player_one'}
-    status = "New"
 
-    player = Player(player_one=player_one, player_two=player_two, board=board, player_data=player_data,
-                    start_date=start_date,
-                    status=status, name=name)
+    player = Player(start_date=start_date, name=name)
     player_id = player_dao.create(player)
 
     _players = player_dao.find_all()
