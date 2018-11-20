@@ -111,6 +111,24 @@ def create_player():
     return render_template('players.html', player_id=player_id, players=_players)
 
 
+# profile
+@app.route('/chess/profile', methods=["GET"])
+def chess_profile():
+    player = Player(name="Jason Jacobs", stats={'games': 100, 'wins': 97, 'losses': 3, 'time': 6000}, games=[],
+                    start_date=datetime.now(), _id="mongo_id")
+
+    return render_template('profile.html', player=player)
+
+
+# profile
+@app.route('/chess/profile', methods=["POST"])
+def chess_profile_update():
+    # TODO save player profile
+    player = Player(name="Jason Jacobs", stats={'games': 100, 'wins': 97, 'losses': 3, 'time': 6000}, games=[],
+                    start_date=datetime.now(), _id="mongo_id")
+
+    return render_template('profile.html', player=player)
+
 # play game
 @app.route('/chess')
 def chess():
