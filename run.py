@@ -129,6 +129,27 @@ def chess_profile_update():
 
     return render_template('profile.html', player=player)
 
+
+# login
+@app.route('/chess/logine', methods=["GET"])
+def chess_login():
+    player = Player(name="Jason Jacobs", stats={'games': 100, 'wins': 97, 'losses': 3, 'time': 6000}, games=[],
+                    start_date=datetime.now(), _id="mongo_id")
+
+    return render_template('login.html', player=player)
+
+
+# login
+@app.route('/chess/login', methods=["POST"])
+def chess_login_user():
+    # TODO save player profile
+    player = Player(name="Jason Jacobs", stats={'games': 100, 'wins': 97, 'losses': 3, 'time': 6000}, games=[],
+                    start_date=datetime.now(), _id="mongo_id")
+
+    return render_template('login.html', player=player)
+
+
+
 # play game
 @app.route('/chess')
 def chess():
