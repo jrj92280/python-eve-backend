@@ -1,0 +1,109 @@
+</div>
+
+<div class="card p-2 shadow container">
+    <div class="card-body">
+        <div class="container panel panel-default">
+            <div class="row mb-3">
+                <form action="/chess/profile" method="POST" id="profile-form">
+                    <input type="hidden" name="uid" id="uid" value="{{ uid }}"/>
+                    <div>
+                        <input class="btn btn-success" type="submit" value="My Stats"/>
+                        <input class="btn btn-success" type="submit" value="Find Friends"/>
+                        <input class="btn btn-success" type="submit" value="Friends List"/>
+                    </div>
+                    <div>
+                        <input type="hidden" name="_id" id="_id" value="{{ game._id if game else '' }}"/>
+                        <div class="mb-0 pb-1 form-group">
+                            <div class="row mt-0 mb-2 mx-0 p-0 w-50">
+                                <select class="form-control" id="playerOneId" name="playerOneId" required>
+                                    <option value="" disabled selected>
+                                        Select Player One
+                                    </option>
+                                    <option value=":Anonymous">
+                                        Anonymous
+                                    </option>
+                                    {% for player in players %}
+                                    <option value="{{ player_one._id }}:{{ player.name }}">{{ player.name }}
+                                    </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="row mt-0 mb-2 mx-0 p-0 w-50">
+                                <select class="form-control" id="playerTwoId" name="playerTwoId" required>
+                                    <option value="" disabled selected>
+                                        Select Player Two
+                                    </option>
+                                    <option value=":Anonymous">
+                                        Anonymous
+                                    </option>
+                                    {% for player in players %}
+                                    <option value="{{ player_two._id }}:{{ player.name }}">{{ player.name }}
+                                    </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="row mt-0 mb-2 mx-0 p-0 w-50">
+                                <input class="form-control" title="Game Name" placeholder="Game Name" type="text"
+                                       id="name"
+                                       name="name" value="{{ game.name if game else '' }}" required/>
+                            </div>
+                        </div>
+
+                        <div class="row mp-0">
+                            <input class="mt-2 mr-2 btn btn-primary" type="submit" value="Save Game"/>
+                            <input class="mt-2 mr-2 btn btn-secondary" id="cancel-button" type="button"
+                                   value="Cancel"/>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            {% if players %}
+            <table class="table table-sm table-striped table-hover">
+                <thead>
+                <tr>
+                    <th style="width:200px" scope="col">Name</th>
+                    <th style="width:175px" scope="col">Start Date</th>
+                    <th scope="col">Id</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for player in players %}
+                <tr>
+                    <td>
+                        {{ player['name'] }}
+                    </td>
+                    <td style="vertical-align:middle;min-width:175px;">
+                        {{ player['start_date'] }}
+                    </td>
+                    <td style="vertical-align:middle;">
+                        {{ player['_id']|string }}
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+    });
+</script>
+</body>
+</html>
+
+<title>Title</title>
+</head>
+<body>
+
+</body>
+</html>
