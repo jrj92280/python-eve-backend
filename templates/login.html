@@ -1,3 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!doctype html>
+    <html lang="en">
+    <head>
+        <title>Jacobs Chess</title>
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}"/>
+
+        <!-- Bootstrap core CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+
+        <!-- Custom styles for this template -->
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/chess.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+
+    </head>
+<body>
+
+<div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
+    <h5 class="my-0 mr-md-auto font-weight-normal">Player Login</h5>
+    <a class="btn btn-outline-primary" href="#">Create User</a>
 </div>
 
 <div class="card p-2 shadow container">
@@ -7,9 +33,9 @@
                 <form action="/chess/login" method="POST" id="login-form">
                     <input type="hidden" name="uid" id="uid" value="{{ uid }}"/>
                     <div>
+                        <input class="btn btn-success" type="submit" value="Create User"/>
                         <input class="btn btn-success" type="submit" value="Login"/>
-                        <input class="btn btn-success" type="submit" value="Ceate New User"/>
-                        <input class="btn btn-success" type="submit" value="Friends List"/>
+                        <input class="btn btn-success" type="submit" value="Forgot User Name or Password"/>
                     </div>
                     <div>
                         <input type="hidden" name="_id" id="_id" value="{{ game._id if game else '' }}"/>
@@ -50,10 +76,59 @@
                         </div>
 
                         <div class="row mp-0">
-                            <input class="mt-2 mr-2 btn btn-primary" type="submit" value="Save Game"/>
                             <input class="mt-2 mr-2 btn btn-secondary" id="cancel-button" type="button"
                                    value="Cancel"/>
                         </div>
                     </div>
                 </form>
             </div>
+
+            {% if players %}
+            <table class="table table-sm table-striped table-hover">
+                <thead>
+                <tr>
+                    <th style="width:200px" scope="col">Name</th>
+                    <th style="width:175px" scope="col">Start Date</th>
+                    <th scope="col">Id</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for player in players %}
+                <tr>
+                    <td>
+                        {{ player['name'] }}
+                    </td>
+                    <td style="vertical-align:middle;min-width:175px;">
+                        {{ player['start_date'] }}
+                    </td>
+                    <td style="vertical-align:middle;">
+                        {{ player['_id']|string }}
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+    });
+</script>
+</body>
+</html>
+
+<title>Title</title>
+</head>
+<body>
+
+</body>
+</html>

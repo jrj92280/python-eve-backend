@@ -1,8 +1,8 @@
 from bson import ObjectId
 
 
-class PlayerDao:
-    def __init__(self, mongo_database):
+class LoginDao:
+    def __init__(self, mongo_database, firebase):
         self._mongo_database = mongo_database
         self._collection = 'players'
 
