@@ -15,25 +15,28 @@ from chess_game.models.player import Player
 
 if 'PORT' in os.environ:
     port = int(os.environ.get('PORT'))
-    # use '0.0.0.0' to ensure your REST API is reachable from all your
+    # use '0.0.0.0' to ensure your REST API is rechable from all your
     # network (and not only your computer).
     host = '0.0.0.0'
 else:
     port = 5000
     host = '127.0.0.1'
 
-tmpl_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'templates')
+template_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'templates')
 static_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static')
 
 os.environ['FLASK_ENV'] = 'development'
 
-app = Eve(template_folder=tmpl_dir,
+app = Eve(template_folder=template_dir,
           static_folder=static_dir)
 
 board_dao = BoardDao(MongoDatabase())
 game_dao = GameDao(MongoDatabase())
 player_dao = PlayerDao(MongoDatabase())
 
+
+# login_doa = LoginDao(MongoDatabase)())
+# profile = ProfileDao(MongoDatabase())
 
 @app.route('/hello')
 def hello():
@@ -142,7 +145,7 @@ def chess_login():
 # login
 @app.route('chess/login', methods=["POST"])
 def chess_login_user():
-    player = Player(name="Jason Jacobs", games=[], login=login,
+    player = Player(name="Jason Jacobs", games=[],
                     start_date=datetime.now(), _id="mongo_id")
 
     return render_template('login.html', player=player)

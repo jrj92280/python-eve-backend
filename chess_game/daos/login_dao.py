@@ -2,9 +2,9 @@ from bson import ObjectId
 
 
 class LoginDao:
-    def __init__(self, mongo_database, firebase):
+    def __init__(self, mongo_database, ):
         self._mongo_database = mongo_database
-        self._collection = 'players'
+        self._collection = 'login'
 
     def create(self, player):
         player_json = player.to_json()
