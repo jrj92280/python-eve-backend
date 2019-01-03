@@ -9,12 +9,13 @@ class MongoDatabase:
     def __init__(self):
         try:
             mongo_url = env("MONGODB_URI")
+            client = MongoClient(mongo_url)
+            mongo_db = client.heroku_xdk2nccx
         except EnvError as e:
             print(e)
             mongo_url = "mongodb://localhost:27017/chess"
-
-        client = MongoClient(mongo_url)
-        mongo_db = client.chess
+            client = MongoClient(mongo_url)
+            mongo_db = client.chess
 
         self.mongo_db = mongo_db
 
