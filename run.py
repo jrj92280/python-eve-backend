@@ -134,7 +134,7 @@ def chess_profile_update():
 
 
 # login
-@app.route('chess/login', methods=["GET"])
+@app.route('/chess/login', methods=["GET"])
 def chess_login():
     player = Player(name="Jason Jacobs", stats={'games': 100, 'wins': 97, 'losses': 3, 'time': 6000}, games=[],
                     start_date=datetime.now(), _id="mongo_id")
@@ -143,7 +143,7 @@ def chess_login():
 
 
 # login
-@app.route('chess/login', methods=["POST"])
+@app.route('/chess/login', methods=["POST"])
 def chess_login_user():
     player = Player(name="Jason Jacobs", games=[],
                     start_date=datetime.now(), _id="mongo_id")
