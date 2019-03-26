@@ -134,8 +134,8 @@ def chess_profile_update():
 
 
 # login
-@app.route('/lchess/login', methods=["GET"])
-def chess_llogin():
+@app.route('/chess/login', methods=["GET"])
+def chess_login_get():
     player = Player(name="Jason Jacobs", stats={'games': 100, 'wins': 97, 'losses': 3, 'time': 6000}, games=[],
                     start_date=datetime.now(), _id="mongo_id")
 
