@@ -53,7 +53,7 @@
                 id="board-cell-{{ row_index }}-{{ column_index }}"
                 onclick="onCellClick({{ row_index }}, {{ column_index }}, '{{ cell.piece }}')">
                 {% if cell.piece %}
-                <img src="{{ url_for('static', filename='images/standard/' + cell.piece.image + '.png') }}">
+                <img src="{{ url_for('static', filename='images/default/' + cell.piece.image + '.png') }}">
                 {% endif %}
             </td>
             {% endfor %}
